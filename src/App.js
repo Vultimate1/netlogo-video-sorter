@@ -24,13 +24,13 @@ import {
   Paper,
   CircularProgress,
   IconButton, IconButtonProps,
-Dialog,
+  Dialog,
   DialogTitle,
   DialogContent,
   TextField,
   DialogActions,
-
 } from '@mui/material';
+//import { DialogsProvider, useDialogs } from '@toolpad/core/useDialogs';
 import { styled } from '@mui/system';
 import ShuffleIcon from '@mui/icons-material/Shuffle';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
@@ -46,11 +46,11 @@ import DoneAllIcon from '@mui/icons-material/DoneAll';
 
 // --- CONFIGURATION ---
 
-const JSON_FILE_PATH = 'json-videos.JSON'; 
+const JSON_FILE_PATH = "/netlogo-vid-sorter/json-videos.JSON"; 
 
 // --- 1. UTILITIES ---
 
-/**
+/*
  * Utility function to shuffle array
  * @param {Array} array 
  * @returns {Array} A new shuffled array
@@ -226,7 +226,7 @@ const SortableVideoItem = React.memo(({ id, itemData, layoutMode, rank }) => {
 
             {/* Video Element */}
             <video 
-                src={itemData.src} 
+                src={itemData.id} 
                 loop 
                 muted 
                 playsInline 
@@ -312,22 +312,23 @@ const loadEmailJSSDK = () => {
 
 
 const EmailFormModal = ({ open, handleClose, orderedItems }) => {
-  console.log("in email form");
-  const form = useRef();
+
   const [isSending, setIsSending] = useState(false);
   const [emailServiceReady, setEmailServiceReady] = useState(false);
   const [sendError, setSendError] = useState(null);
 
-  useEffect(() => {
-    loadEmailJSSDK()
-        .then(() => setEmailServiceReady(true))
-        .catch((error) => {
-            setSendError("Email service failed to initialize (SDK Error). Please check network or console for details.");
-        });
-  }, []);
 
-  const sendEmail = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (email) => {
+    console.log("begins");
+    const form = useRef();
+    console.log("beginning");
+    useEffect(() => {
+      loadEmailJSSDK()
+          .then(() => setEmailServiceReady(true))
+          .catch((error) => {
+              setSendError("Email service failed to initialize (SDK Error). Please check network or console for details.");
+          });
+    }, []);
     setIsSending(true);
     setSendError(null);
     
@@ -354,104 +355,73 @@ const EmailFormModal = ({ open, handleClose, orderedItems }) => {
         );
 
         if (result.status === 200) {
-            console.log('Message sent successfully!');
-            handleClose(); 
+            return 'Message sent successfully!';
+            //handleClose(); 
         } else {
             throw new Error(`EmailJS API returned status: ${result.status} - ${result.text}`);
         }
 
     } catch(error) {
-        console.error('Failed to send message:', error);
-        setSendError("Failed to send email. Check SERVICE_ID, TEMPLATE_ID, and PUBLIC_KEY constants in the code.");
+        return 'Failed to send message due to error: ${error}';
+        //setSendError("Failed to send email. Check SERVICE_ID, TEMPLATE_ID, and PUBLIC_KEY constants in the code.");
     } finally {
         if (form.current && hiddenInput) {
             form.current.removeChild(hiddenInput);
         }
         setIsSending(false);
     }
-  };
-
   const isKeyMissing = SERVICE_ID.includes('YOUR_') || TEMPLATE_ID.includes('YOUR_');
   const isFormDisabled = isSending || !emailServiceReady || isKeyMissing;
 
+  };
+
+  /*function handleSubmit(email) {
+     useEffect((email) => { 
+      const dialogs = useDialogs();
+      async function sendEmail() {
+       const email = await dialogs.prompt('Enter email to send to: ', {
+         okText: "OK",
+         cancelText: "Cancel",
+       });
+       if (email) {
+         const emailConfirm = await dialogs.confirm(
+           `Are you sure you want to send your results to "${email}"?`,
+         ); 
+         if (emailConfirm) {
+           sendEmail(email);
+         }
+       }
+      }
+     });
+  }*/
+  const [email, setEmail] = useState("");
+  const onSubmit = () => {
+    handleSubmit(email);
+    handleClose();
+  };
   return (
+    <>
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>Email the Video Complexity Order</DialogTitle>
-      <form ref={form} onSubmit={sendEmail}>
         <DialogContent>
-          <Typography variant="body2" sx={{ mb: 2 }}>
-            Your current sorted order will be included in the message.
-          </Typography>
-          
-          {sendError && (
-              <Box sx={{ p: 1, mb: 2, bgcolor: '#ffebee', border: '1px solid #f44336', borderRadius: '4px' }}>
-                  <Typography color="error" variant="body2">{sendError}</Typography>
-              </Box>
-          )}
-          
-          {!emailServiceReady && (
-              <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                  <CircularProgress size={20} sx={{ mr: 1 }} />
-                  <Typography variant="body2" color="textSecondary">Initializing email service...</Typography>
-              </Box>
-          )}
-
-          {isKeyMissing && (
-              <Box sx={{ p: 1, mb: 2, bgcolor: '#fff3e0', border: '1px solid #ff9800', borderRadius: '4px' }}>
-                  <Typography color="#ff9800" variant="body2">
-                      <span style={{fontWeight: 'bold'}}>ACTION REQUIRED:</span> You still need to replace the placeholder **SERVICE_ID** and **TEMPLATE_ID** constants in the code to enable live emailing.
-                  </Typography>
-              </Box>
-          )}
-
-          <TextField
-            autoFocus
-            margin="dense"
-            label="Your Name"
-            type="text"
-            fullWidth
-            variant="outlined"
-            name="from_name" 
-            required
-            size="small"
-          />
-          <TextField
-            margin="dense"
-            label="Your Email"
-            type="email"
-            fullWidth
-            variant="outlined"
-            name="from_email" 
-            required
-            size="small"
-          />
-          <TextField
-            margin="dense"
-            label="Additional Notes"
-            type="text"
-            fullWidth
-            multiline
-            rows={4}
-            variant="outlined"
-            name="message" 
-            size="small"
-            placeholder="E.g., 'Here is my proposed complexity ranking...'"
-          />
+          <TextField 
+             fullwidth
+             label="Enter your email"
+             value={email}
+             onChange={(e) => setEmail(e.target.value)}
+             autoFocus
+             margin="normal" />
         </DialogContent>
-        <DialogActions sx={{ p: 2 }}>
-          <Button onClick={handleClose} disabled={isSending} variant="outlined">Cancel</Button>
-          <Button 
-            type="submit" 
-            disabled={isFormDisabled} 
-            variant="contained" 
-            color="primary"
-            startIcon={isSending ? null : <EmailIcon />}
-          >
-            {isSending ? <CircularProgress size={24} color="inherit" /> : 'Send Order'}
-          </Button>
-        </DialogActions>
-      </form>
+      <DialogActions>
+        <Button onClick={handleClose}>Cancel</Button>
+        <Button variant="contained" onClick={onSubmit}>
+          {isSending ? "Sending…" : "Send Email"}
+        </Button>
+      </DialogActions>
+      
     </Dialog>
+
+    </>
   );
 };
 
@@ -482,6 +452,7 @@ const ComplexitySorter = ({ initialItems, layoutMode }) => {
 
     if (active.id !== over.id) {
       setItems((items) => {
+	//console.log(active.id, item.id);
         const oldIndex = items.findIndex(item => item.id === active.id);
         const newIndex = items.findIndex(item => item.id === over.id);
         return arrayMove(items, oldIndex, newIndex);
@@ -491,8 +462,13 @@ const ComplexitySorter = ({ initialItems, layoutMode }) => {
   }
   const [openModal, setOpenModal] = useState(false);
 
-  const handleOpenModal = () => setOpenModal(true);
-  const handleCloseModal = () => setOpenModal(false);
+  const handleOpenModal = () => {  
+      setOpenModal(true);
+      console.log("open modal");
+  }
+  const handleCloseModal = () => {
+      setOpenModal(false);
+  }
 
   // Function to download the current order as a CSV file (Excel compatible)
   const downloadOrderAsCSV = () => {
@@ -661,7 +637,7 @@ const ComplexitySorter = ({ initialItems, layoutMode }) => {
           
           <Button 
             variant="text" 
-            color="default" 
+            color="secondary" 
             onClick={() => setItems(shuffleArray(items))} 
             sx={{ padding: '10px 30px', borderRadius: '25px' }}
             startIcon={<ShuffleIcon />}
@@ -680,14 +656,21 @@ const ComplexitySorter = ({ initialItems, layoutMode }) => {
           {message}
         </Typography>
       )}
-      <EmailFormModal 
-        open={openModal} 
-        handleClose={handleCloseModal} 
-        orderedItems={items}
-      />
+
+      {openModal && (
+          <EmailFormModal 
+               open={openModal} 
+               handleClose={handleCloseModal} 
+               orderedItems={items}
+          />)}
+
+
     </Container>
   );
 };
+
+
+
 
 
 // --- 5. MAIN APP COMPONENT ---
