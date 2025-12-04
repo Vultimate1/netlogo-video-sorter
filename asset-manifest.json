@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/netlogo-vid-sorter/static/css/main.e6c13ad2.css",
-    "main.js": "/netlogo-vid-sorter/static/js/main.3e3019ab.js",
-    "static/js/488.4039aadc.chunk.js": "/netlogo-vid-sorter/static/js/488.4039aadc.chunk.js",
-    "index.html": "/netlogo-vid-sorter/index.html",
-    "main.e6c13ad2.css.map": "/netlogo-vid-sorter/static/css/main.e6c13ad2.css.map",
-    "main.3e3019ab.js.map": "/netlogo-vid-sorter/static/js/main.3e3019ab.js.map",
-    "488.4039aadc.chunk.js.map": "/netlogo-vid-sorter/static/js/488.4039aadc.chunk.js.map"
+    "main.css": "/netlogo-video-sorter/static/css/main.e6c13ad2.css",
+    "main.js": "/netlogo-video-sorter/static/js/main.2be383ad.js",
+    "static/js/488.bd873238.chunk.js": "/netlogo-video-sorter/static/js/488.bd873238.chunk.js",
+    "index.html": "/netlogo-video-sorter/index.html",
+    "main.e6c13ad2.css.map": "/netlogo-video-sorter/static/css/main.e6c13ad2.css.map",
+    "main.2be383ad.js.map": "/netlogo-video-sorter/static/js/main.2be383ad.js.map",
+    "488.bd873238.chunk.js.map": "/netlogo-video-sorter/static/js/488.bd873238.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.3e3019ab.js"
+    "static/js/main.2be383ad.js"
   ]
 }
