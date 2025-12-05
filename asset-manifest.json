@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/netlogo-video-sorter/static/css/main.e6c13ad2.css",
-    "main.js": "/netlogo-video-sorter/static/js/main.c9bce52a.js",
+    "main.js": "/netlogo-video-sorter/static/js/main.61653f79.js",
     "static/js/488.bd873238.chunk.js": "/netlogo-video-sorter/static/js/488.bd873238.chunk.js",
     "index.html": "/netlogo-video-sorter/index.html",
     "main.e6c13ad2.css.map": "/netlogo-video-sorter/static/css/main.e6c13ad2.css.map",
-    "main.c9bce52a.js.map": "/netlogo-video-sorter/static/js/main.c9bce52a.js.map",
+    "main.61653f79.js.map": "/netlogo-video-sorter/static/js/main.61653f79.js.map",
     "488.bd873238.chunk.js.map": "/netlogo-video-sorter/static/js/488.bd873238.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.c9bce52a.js"
+    "static/js/main.61653f79.js"
   ]
 }
