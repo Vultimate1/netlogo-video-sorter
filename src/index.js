@@ -4,14 +4,16 @@ import './index.css';
 import App from './App';
 import App_noflex from './App_noflex';
 import VideoPairApp from './App_onebyone';
-
+import { HashRouter } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+  <HashRouter>
     <VideoPairApp />
+  </HashRouter>
   </React.StrictMode>
 );
 

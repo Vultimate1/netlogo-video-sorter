@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
+import { Button, Typography, Container, Box, Dialog, DialogTitle, DialogContent, TextField, DialogActions } from '@mui/material';
 
 // VideoPairApp.jsx
 // A small Moral-Machine-style app: show 2 videos, let user click one, log choice, then show next 2.
@@ -24,7 +25,7 @@ export default function VideoPairApp() {
   // Build a public URL for a video entry. Assumes video entries in json use paths relative to public/, e.g. "swarm-videos/foo.mp4".
   const makeUrl = (id) => {
     // process.env.PUBLIC_URL is set by CRA at build time; during dev it's empty string
-    const base = process.env.PUBLIC_URL || "";
+    const base = process.env.PUBLIC_URL;
     // ensure leading slash if PUBLIC_URL empty
     const prefix = base === "" ? "" : base;
     return `${prefix}/${id}`.replace("/\/g", "/");
@@ -36,7 +37,7 @@ export default function VideoPairApp() {
     async function load() {
       try {
         setLoading(true);
-        const res = await fetch(`${process.env.PUBLIC_URL}/json-videos.json`);
+        const res = await fetch(`${process.env.PUBLIC_URL}/json-videos.JSON`);
         if (!res.ok) throw new Error("Failed to fetch json-videos.json: " + res.status);
         const data = await res.json();
         if (!mounted) return;
@@ -155,9 +156,22 @@ export default function VideoPairApp() {
       <div style={{ marginTop: 12 }}>
         <button onClick={restart}>Restart</button>
       </div>
+      <div style={{ marginTop: 1 }}>
+        <Timerbox count={1} />
+      </div>
     </div>
   );
 }
+
+function Timerbox({ count }) {
+  return (
+    <Box sx={{ width: '30%', height: '15%', borderRadius: '4px', borderColor: 'info.main', backgroundColor: "rgba(0,1,255,0.1)", color: 'primary.main', position: "fixed" }}>
+       
+    </Box>
+  );
+
+
+} 
 
 function VideoCard({ item, onChoose, position = "left" }) {
   if (!item) return null;
