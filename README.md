@@ -4,7 +4,7 @@ Temporary website for surveying autonomous drone swarm behaviors in simulations
 Click [here](https://exalabs-umass-lowell.github.io/netlogo-video-sorter/) to take the survey!
 
 Survey layout:
-![Screen layout](/public/sample-layout-init.png)
+![Screen layout](/public/sample-layout-init-new.png)
 
 ## Instructions
 1. Click on one of the two videos to select which is more complex.
