@@ -7,7 +7,7 @@ Survey layout:
 ![Screen layout](/public/sample-layout-init-new.png)
 
 ## Instructions
-1. Click on one of the two videos to select which is more complex.
+1. Click on one of the two videos to select which is more complex.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;**What is Complexity?** It is up to you to define!
 2. Once you reach the ending screen, click **Submit** to send your results. 
 
