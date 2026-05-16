@@ -24,7 +24,7 @@ import { keyframes } from "@mui/system";
 import axios from "axios";
 
 // VideoPairApp.jsx
-let demographicsData = {"age": 0, "year": 0, "major": "", "minor": ""}
+let demographicsData = {"age": 0, "degree": "", "country": "", "languages": "", "profession": ""}
 let rankedVideos = {};
 let selectionTimes = {};
 let notSelectionTimes = {};
@@ -589,8 +589,7 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
          <Typography sx={{ margin: '13px', fontFamily: "'DM Mono', monospace", fontWeight: 'bold', fontSize: '15px', letterSpacing: '0.16em', textTransform: 'uppercase', color: '#FFF', borderLeft: '20px solid rgba(0,0,0,0)', }}> Exalabs UMass Lowell </Typography>
       </Box>   
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 25, padding: '60px', color: '#000' }}>
-        <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}>Click the video you think is{' '}</span>&nbsp;
-        <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}><strong>more complex</strong></span>&nbsp;
+        <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}>Click the video you think is{' '} <strong>more complex</strong></span>&nbsp;
       </Box>
       
       <div style={{ display: "flex", gap: 12, alignItems: "stretch" }}>
@@ -692,14 +691,22 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
          <Typography sx={{ margin: '12px 0 12px 10px', fontFamily: "'DM Mono', monospace", fontWeight: 'bold', fontSize: '15px', letterSpacing: '0.16em', textTransform: 'uppercase', color: '#FFFFFF', borderLeft: '1px solid rgba(26,25,23,0.15)', paddingLeft: '10px', }}> Exalabs UMass Lowell </Typography>
       </Box>
         <Box sx={{ justifyContent: 'center', alignItems: 'center', position: 'relative', opacity: titleFloat ? 1 : 0, transform: titleFloat ? "translateY(0)" : "translateY(-50px)", transition: "opacity 1s ease-out, transform 1s ease-out", }}>
-           <Typography sx={{fontWeight: 'bold', fontSize: '50px', fontFamily: "'Cormorant Garamond', Georgia, serif", alignItems: 'center', justifyContent: 'center', display: 'flex', position: 'relative', margin: '50px', color: '#000',}}>Survey complete</Typography>
+           <Typography sx={{fontWeight: 'bold', fontSize: '50px', fontFamily: "'Cormorant Garamond', Georgia, serif", alignItems: 'center', justifyContent: 'center', display: 'flex', position: 'relative', margin: '50px', color: '#000',}}>
+		Survey complete
+	   </Typography>
+           <Typography sx={{fontWeight: '', fontSize: '35px', fontFamily: "'Cormorant Garamond', Georgia, serif", alignItems: 'center', justifyContent: 'center', display: 'flex', position: 'relative', margin: '30px', color: '#000',}}>
+		Thank you for participating in this study conducted by Exalabs!
+	   </Typography>
         </Box>
         <EmailBox xpos='0%' ypos='20%'/>
-        <Button sx= {{ gap: '50px', margin: '50px 0', borderBottom: '100px', color: '#000', border: '1px solid #000', '&:hover': { backgroundColor: 'rgba(150, 220, 255, 0.9)', color: '#FFF', border: '1px solid #000',}, fontSize: '25px', }} onClick={restart}>Restart</Button>
+
        </div>
       </>
     );
   }
+
+/*
+        <Button sx= {{ gap: '50px', margin: '50px 0', borderBottom: '100px', color: '#000', border: '1px solid #000', '&:hover': { backgroundColor: 'rgba(150, 220, 255, 0.9)', color: '#FFF', border: '1px solid #000',}, fontSize: '25px', }} onClick={restart}>Restart</Button>*/
 
   if (!pair || pair.length < 2) {
     return (
@@ -1028,14 +1035,14 @@ function InstructionCard({ psg, textSize }) {
       return (
          <div style={{ 
            width: '400px', 
-           height: 'flex', 
+           height: '300px', 
            borderRadius: '10px', 
            borderColor: '#3399FF', 
            backgroundColor: 'white', 
            color: '#003366', 
            padding: '150px 20px',
 	   whiteSpace: 'pre-wrap',
-           fontSize: textSize
+           fontSize: textSize,
          }}>
            {psg}
          </div>
@@ -1044,7 +1051,9 @@ function InstructionCard({ psg, textSize }) {
    if (psg.type === "instruction") {
       return (
          <div style={{ 
-            width: '500px', 
+            width: '500px',
+            alignCenter: 'center',
+            justifyContent: 'center', 
             height: 'flex', 
             borderRadius: '10px', 
             margin: '20px', 
@@ -1098,18 +1107,22 @@ function InstructionBoard({ msgs, nextLink, setNextLink, currLink, setCurrLink, 
          <Fade in timeout={300} key={currentInstruction}>
          <p>< InstructionCard psg={msgs[currentInstruction]} textSize={textSize} /></p>
          </Fade>
-         <div>
-           {currentInstruction > 0 && 
+         <Box sx={{
+	      height: '50%', 
+	      alignItems: 'center', 
+	      gap: '5%',
+	      position: 'relative', }}>
+           {msgs.length > 1 && currentInstruction > 0 && 
                (<Button onClick={prev} sx={{ backgroundColor: '#80D4FF', color: '#000000', '&:hover': { backgroundColor: '#0066FF', color: '#FFFFFF', textSize: textSize} }} >
 		   <Typography sx={{ textSize: textSize}}>Previous</Typography>
                 </Button>)
            }
-           <Typography sx={{ gap: '20px', fontWeight: 'bold', fontFamily: `'Orbitron', 'Roboto Mono', 'JetBrains Mono', monospace`, }}>
+           { msgs.length > 1 && <Typography sx={{ gap: '20px', fontWeight: 'bold', fontFamily: `'Orbitron', 'Roboto Mono', 'JetBrains Mono', monospace`, }}>
               {(currentInstruction+1)}/{msgs.length}
-           </Typography>
-           {currentInstruction < msgs.length - 1 && (
+           </Typography> }
+           {msgs.length > 1 && currentInstruction < msgs.length - 1 && (
 		<Button onClick={next} sx={{ backgroundColor: '#80D4FF', color: '#000000', '&:hover': { backgroundColor: '#0066FF', color: '#FFFFFF'} }} >
-		   <Typography sx={{ textSize: textSize}}>Next</Typography>
+		   <Typography sx={{ textSize: textSize }}>Next</Typography>
 	        </Button>)
 	   }
            {currentInstruction >= msgs.length - 1 && !nextLink && (
@@ -1117,7 +1130,7 @@ function InstructionBoard({ msgs, nextLink, setNextLink, currLink, setCurrLink, 
 		   <Typography sx={{ textSize: textSize}}>{nextText}</Typography>
 	        </Button>)
 	   }
-         </div>
+         </Box>
       </div>
    );
 }
@@ -1279,10 +1292,11 @@ const getFile = () => {
           paramValues.push(p.split(":")[1]);
       });
 
-      let demoColumns = ["", "", "", ""];
-      if (index === 0) demoColumns = ["", "year", demographicsData["year"]];
-      if (index === 1) demoColumns = ["", "major", demographicsData["major"]];
-      if (index === 2) demoColumns = ["", "minor", demographicsData["minor"]];
+      let demoColumns = ["", "", "", "", ""];
+      if (index === 0) demoColumns = ["", "Level of Education", demographicsData["degree"]];
+      if (index === 1) demoColumns = ["", "Country", demographicsData["country"]];
+      if (index === 2) demoColumns = ["", "Spoken Languages", demographicsData["languages"]];
+      if (index === 3) demoColumns = ["", "Profession", demographicsData["profession"]];
 
       return [
         index+1, // Current Rank
@@ -1302,7 +1316,7 @@ const getFile = () => {
       "max separation turn",
       "population",
       "",
-      "age", demographicsData["age"], 
+      "Age", demographicsData["age"], 
     ];
     console.log("csvrows: "+csvRows);
     const content = [
@@ -1454,7 +1468,7 @@ function EmailBox({ xpos, ypos }) {
           }}
           onClick={renderEmail}
         >
-          <Typography sx={{ fontWeight: "bold", fontSize: "30px" }}>
+          <Typography sx={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: "bold", fontSize: "30px" }}>
             Submit
           </Typography>
         </Button>
@@ -1554,11 +1568,12 @@ function renderEmail() {
 /* DEMOGRAPHICS */
 function DemographicsForm({}) {
     const [age, setAge] = useState("");
-    const [schoolyear, setSchoolyear] = useState("");
-    const [major, setMajor] = useState("");
-    const [minor, setMinor] = useState("");
+    const [highestDegree, setHighestDegree] = useState("");
+    const [country, setCountry] = useState("");
+    const [languages, setLanguages] = useState("");
+    const [profession, setProfession] = useState("");
     const ages = ["18 - 22 years", "23 - 27 years", "28 - 32 years",  "33 - 37 years", "38 - 42 years", "43 - 47 years"];
-    const schoolyears = ["Freshman", "Sophomore", "Junior", "Senior", "Graduate/Master's", "Ph.D/Doctorate"];
+    const degrees = ["High School Diploma", "Bachelor's", "Graduate/Master's", "Ph.D/Doctorate"];
     return (
        <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'left', marginLeft: '5%', }}>
            <Box sx={{ display: 'flex', flexDirection: 'column', marginBottom: 2 }}>
@@ -1576,13 +1591,13 @@ function DemographicsForm({}) {
                    </Select>
            </Box>
            <Box sx={{ display: 'flex', flexDirection: 'column', marginBottom: 2 }}>
-               <Typography sx={{  }}> Please select what year of university you are in: </Typography>
-                   <Select value={schoolyear} required onChange={(e) => {
-                          setSchoolyear(e.target.value);
-                          demographicsData["year"] = e.target.value; 
-                          console.log("demographics data: ", demographicsData["year"]);
+               <Typography sx={{  }}> Please select the highest certification you received: </Typography>
+                   <Select value={highestDegree} required onChange={(e) => {
+                          setHighestDegree(e.target.value);
+                          demographicsData["degree"] = e.target.value; 
+                          console.log("demographics data: ", demographicsData["degree"]);
                        }} displayEmpty>
-                       {schoolyears.map((s) => (
+                       {degrees.map((s) => (
                            <MenuItem  key={s} value={s}>
                                 {s}
                            </MenuItem>
@@ -1590,33 +1605,64 @@ function DemographicsForm({}) {
                    </Select>
            </Box>
            <Box sx={{ display: 'flex', flexDirection: 'column', marginBottom: 2 }}>
-               <Typography sx={{  }}> Enter your major: </Typography>
+               <Typography sx={{  }}> What country are you from? </Typography>
+                   <TextField
+                        id="outlined-required"
+                        label="Optional"
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            setCountry(e.target.value);
+                            demographicsData["country"] = e.target.value;
+			    console.log("demographics data: ", demographicsData["country"]);
+                            if (e.target.value == "Enter your country") {
+                                demographicsData["country"] = "";
+                            }
+                        }}
+                        variant="outlined"
+                        defaultValue="Enter your country"
+                   />
+           </Box>
+           <Box sx={{ display: 'flex', flexDirection: 'column', marginBottom: 2 }}>
+               <Typography sx={{  }}> Are you multilingual? If so, enter your languages: </Typography>
                    <TextField
                         required
                         id="outlined-required"
                         label="Required"
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                            setMajor(event.target.value);
-                            demographicsData["major"] = e.target.value;
+                            setLanguages(e.target.value);
+                            demographicsData["languages"] = e.target.value;
+			    console.log("demographics data: ", demographicsData["languages"]);
+                            if (e.target.value == "Languages") {
+                                demographicsData["languages"] = "";
+                            }
+                            if (e.target.value.includes(",")) {
+                                demographicsData["languages"] = '"'.concat(demographicsData["languages"], '"');
+			    console.log("demographics data: ", demographicsData["languages"]);
+
+                            }
                         }}
                         variant="outlined"
-                        defaultValue="Enter your major"
+                        defaultValue="Languages"
                    />
            </Box>
            <Box sx={{ display: 'flex', flexDirection: 'column', marginBottom: 2 }}>
-               <Typography sx={{  }}> Enter your minor (if applicable): </Typography>
+               <Typography sx={{  }}> What best describes your profession? </Typography>
                    <TextField
                         id="outlined-required"
                         label="Optional"
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                            setMinor(event.target.value);
-                            demographicsData["minor"] = e.target.value;
-                            if (e.target.value == "Enter your minor") {
-                                demographicsData["minor"] = "";
+                            setProfession(e.target.value);
+                            demographicsData["profession"] = e.target.value;
+			    console.log("demographics data: ", demographicsData["profession"]);
+                            if (e.target.value == "Profession") {
+                                demographicsData["profession"] = "";
+                            }
+                            if (e.target.value.includes(",")) {
+                                demographicsData["profession"] = '"'.concat(demographicsData["profession"], '"');
+console.log("demographics data: ", demographicsData["profession"]);
                             }
                         }}
                         variant="outlined"
-                        defaultValue="Enter your minor"
+                        defaultValue="Enter your profession"
                    />
            </Box>
        </Box>
