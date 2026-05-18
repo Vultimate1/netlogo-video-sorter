@@ -53,6 +53,7 @@ export default function VideoPairApp_simple() {
   const [items, setItems] = useState([]); // full list loaded from JSON
   const [loading, setLoading] = useState(true); // is the data loading
   const [demographics, setDemographics] = useState(true); // show form for getting user demographic info
+  const [errors, setErrors] = useState({});
   const [startvid, setStartvid] = useState(""); // set the starting video
   const [behavior, setBehavior] = useState(""); // set the behavior to be used in the video
   const [surveyVids, setSurveyVids] = useState([]); // setting the videos to be used in the survey
@@ -243,6 +244,22 @@ useEffect(() => {
         setStartvid(video);
         console.log("behavior is "+String(behavior));
   }
+
+// Error checking for each question
+  const validate = () => { // checks to see if all required questions are filled out
+       const recentErrors = {}
+       console.log("inside validate\n");
+       console.log(demographicsData);
+       if (demographicsData["age"] == 0) recentErrors.age = "Please select an age range.";
+       if (demographicsData["highestDegree"] == "") recentErrors.highestDegree = "Please select from the dropdown the highest degree you have attained.";
+       if (demographicsData["country"] == "" || demographicsData["country"] == "Enter your country") recentErrors.country = "Please select your country from the dropdown.";
+       if (demographicsData["languages"] == "" || demographicsData["languages"] == "Languages") recentErrors.language = "Please enter any languages you know.";
+       if (demographicsData["profession"] == "" || demographicsData["profession"] == "Enter your profession") recentErrors.profession = "Please enter any languages you know.";
+       console.log(recentErrors);
+       setErrors(recentErrors);
+       return Object.keys(recentErrors).length === 0; // check if number of errors is zero.
+  };
+
 
 useEffect(() => {
   if (!behavior || !items.length) return;
@@ -590,8 +607,8 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
          />
          <Typography sx={{ margin: '13px', fontFamily: "'DM Mono', monospace", fontWeight: 'bold', fontSize: '15px', letterSpacing: '0.16em', textTransform: 'uppercase', color: '#FFF', borderLeft: '20px solid rgba(0,0,0,0)', }}> Exalabs UMass Lowell </Typography>
       </Box>   
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 25, padding: '60px', color: '#000' }}>
-        <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}>Click the video you think is{' '} <strong>more complex</strong></span>&nbsp;
+      <Box sx={{ display: 'flex', flexDirection: 'column', textAlign: 'center', alignItems: 'center', justifyContent: 'center', fontSize: 25, padding: '60px', margin: '0 auto', color: '#000' }}>
+        <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 25, }}>Click the video you think is{' '} <strong>more complex</strong></span>&nbsp;
       </Box>
       
       <div style={{ display: "flex", gap: 12, alignItems: "stretch" }}>
@@ -644,12 +661,14 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
          <Typography sx={{ margin: '15px', fontFamily: "'DM Mono', monospace", fontWeight: 'bold', fontSize: '15px', letterSpacing: '0.16em', textTransform: 'uppercase', color: '#FFF', borderLeft: '50px solid rgba(0,0,0,0)', position: 'fixed', top:'0px',  }}> Exalabs UMass Lowell </Typography>
       </Box>
       <Box sx={{borderRadius: '10px', display: 'flex', flexDirection: 'column',  width: '50%', height: '80%', border: '2px solid #001000', margin: '10% 0 0 0', }}>
-        <DemographicsForm/>
+        <DemographicsForm errors={errors}/>
         <Button sx={{ margin: '48px 0 0', backgroundColor: "#FFF", fontWeight: 300, fontSize: '15px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#9a9690', border: '1px solid rgba(26,25,23,0.2)', borderRadius: '4px', padding: '10px 28px', '&:hover': { color: '#1a1917', borderColor: '#2a2a8c', backgroundColor: 'transparent' }, }} variant="contained" onClick={() => {
            // goes to the next screen for getting user demographics
-           setDemographics(false);
-           setInitSurvey(true);
-           setTitleFloat(true);
+           if (validate()) {
+              setDemographics(false);
+              setInitSurvey(true);
+              setTitleFloat(true);
+           }
         }}>
                  <Typography sx={{ fontSize: 20, fontFamily: "'Cormorant Garamond', Georgia, serif"}}> <strong>Submit</strong> </Typography>
         </Button>
@@ -1567,8 +1586,9 @@ function renderEmail() {
 
 }
 
+
 /* DEMOGRAPHICS */
-function DemographicsForm({}) {
+function DemographicsForm({ errors }) {
     const [age, setAge] = useState("");
     const [highestDegree, setHighestDegree] = useState("");
     const [country, setCountry] = useState("");
@@ -1576,6 +1596,7 @@ function DemographicsForm({}) {
     const [profession, setProfession] = useState("");
     const ages = ["18 - 22 years", "23 - 27 years", "28 - 32 years",  "33 - 37 years", "38 - 42 years", "43 - 47 years"];
     const degrees = ["High School Diploma", "Bachelor's", "Graduate/Master's", "Ph.D/Doctorate"];
+
     return (
        <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'left', marginLeft: '5%', }}>
            <Box sx={{ display: 'flex', flexDirection: 'column', marginBottom: 2 }}>
@@ -1591,6 +1612,7 @@ function DemographicsForm({}) {
                            </MenuItem>
                        ))}
                    </Select>
+                   {errors.age && <Typography color="error" variant="caption">{errors.age}</Typography>}
            </Box>
            <Box sx={{ display: 'flex', flexDirection: 'column', marginBottom: 2 }}>
                <Typography sx={{  }}> Please select the highest certification you received: </Typography>
@@ -1605,6 +1627,7 @@ function DemographicsForm({}) {
                            </MenuItem>
                        ))}
                    </Select>
+                   {errors.highestDegree && <Typography color="error" variant="caption">{errors.highestDegree}</Typography>}
            </Box>
            <Box sx={{ display: 'flex', flexDirection: 'column', marginBottom: 2 }}>
                <Typography sx={{  }}> What country are you from? </Typography>
@@ -1621,6 +1644,8 @@ function DemographicsForm({}) {
                         }}
                         variant="outlined"
                         defaultValue="Enter your country"
+                        error={!!errors.country} 
+                        helperText={errors.country}
                    />
            </Box>
            <Box sx={{ display: 'flex', flexDirection: 'column', marginBottom: 2 }}>
@@ -1644,6 +1669,8 @@ function DemographicsForm({}) {
                         }}
                         variant="outlined"
                         defaultValue="Languages"
+                        error={!!errors.languages} 
+                        helperText={errors.languages}
                    />
            </Box>
            <Box sx={{ display: 'flex', flexDirection: 'column', marginBottom: 2 }}>
@@ -1665,6 +1692,8 @@ console.log("demographics data: ", demographicsData["profession"]);
                         }}
                         variant="outlined"
                         defaultValue="Enter your profession"
+                        error={!!errors.profession} 
+                        helperText={errors.profession}
                    />
            </Box>
        </Box>
