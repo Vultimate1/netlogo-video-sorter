@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/netlogo-video-sorter/static/css/main.e024dff0.css",
-    "main.js": "/netlogo-video-sorter/static/js/main.82463b8d.js",
+    "main.js": "/netlogo-video-sorter/static/js/main.e2bcd2a0.js",
     "static/js/488.87df46da.chunk.js": "/netlogo-video-sorter/static/js/488.87df46da.chunk.js",
     "static/media/inter-latin-ext-600-normal.woff": "/netlogo-video-sorter/static/media/inter-latin-ext-600-normal.4d0d5017d71ea1750fc1.woff",
     "static/media/inter-latin-ext-400-normal.woff": "/netlogo-video-sorter/static/media/inter-latin-ext-400-normal.c616205185f0d3677df9.woff",
@@ -61,11 +61,11 @@
     "static/media/roboto-greek-ext-400-normal.woff": "/netlogo-video-sorter/static/media/roboto-greek-ext-400-normal.f72a2e017918bb573bf7.woff",
     "index.html": "/netlogo-video-sorter/index.html",
     "main.e024dff0.css.map": "/netlogo-video-sorter/static/css/main.e024dff0.css.map",
-    "main.82463b8d.js.map": "/netlogo-video-sorter/static/js/main.82463b8d.js.map",
+    "main.e2bcd2a0.js.map": "/netlogo-video-sorter/static/js/main.e2bcd2a0.js.map",
     "488.87df46da.chunk.js.map": "/netlogo-video-sorter/static/js/488.87df46da.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e024dff0.css",
-    "static/js/main.82463b8d.js"
+    "static/js/main.e2bcd2a0.js"
   ]
 }
