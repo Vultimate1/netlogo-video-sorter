@@ -460,7 +460,6 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
 
   const restart = () => {
     console.log("in restart");
-    loadVideos();
     var s = shuffleNoConsecutive(items);
     var behavior = s[0].id.split("/")[2];
     while (behavior === "unknown") {
@@ -487,6 +486,9 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
     }
     setResults([]);
     setRankings([]);
+    
+    setInitSurvey(true);
+
     if (numVideos == 0 && sorted.length > 0) {
        location.reload()
     }
@@ -699,14 +701,14 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
 	   </Typography>
         </Box>
         <EmailBox xpos='0%' ypos='20%'/>
-
+        
        </div>
       </>
     );
   }
 
-/*
-        <Button sx= {{ gap: '50px', margin: '50px 0', borderBottom: '100px', color: '#000', border: '1px solid #000', '&:hover': { backgroundColor: 'rgba(150, 220, 255, 0.9)', color: '#FFF', border: '1px solid #000',}, fontSize: '25px', }} onClick={restart}>Restart</Button>*/
+/*<Button sx= {{ gap: '50px', margin: '50px 0', borderBottom: '100px', color: '#000', border: '1px solid #000', '&:hover': { backgroundColor: 'rgba(150, 220, 255, 0.9)', color: '#FFF', border: '1px solid #000',}, fontSize: '25px', }} onClick={restart}>Restart</Button>
+        */
 
   if (!pair || pair.length < 2) {
     return (
@@ -812,7 +814,7 @@ function Timerbox({ start, time_to_choose }) {
 function ProgressBar({ number, total }) {
     return (
     <Box sx={{ display: 'flex', width:'100%', height:24, display:'flex', borderRadius: '5px', position: 'relative',  overflow: 'hidden' }}>
-      <Box sx={{backgroundColor: '#0EB8E6', width: `${(number/total)*100}%`}}>
+      <Box sx={{backgroundColor: '#31F5A7', width: `${(number/total)*100}%`}}>
       </Box>
       <Box sx={{backgroundColor: '#778385', width: `${100 - (number/total)*100}%`}}/>
       <Typography sx={{position: 'absolute', top: '50%', left:'50%', transform:'translate(-50%, -50%)',}}><strong>{Math.round((number/total)*100)}%</strong></Typography>
