@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
+import { Link } from 'react-router-dom'; 
 import {   Button, 
   Typography, 
   Container, 
@@ -52,8 +53,11 @@ export default function VideoPairApp_simple() {
   const startedSurvey = useRef(false); // determine when to start main survey
   const [items, setItems] = useState([]); // full list loaded from JSON
   const [loading, setLoading] = useState(true); // is the data loading
+  const [countries, setCountries] = useState([]); // getting countries from excel file
+  const [languages, setLanguages] = useState([]); // getting languages from excel file
+  const [professions, setProfessions] = useState([]); // getting professions from excel file
   const [demographics, setDemographics] = useState(true); // show form for getting user demographic info
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({}); // finding errors in demographics survey response
   const [startvid, setStartvid] = useState(""); // set the starting video
   const [behavior, setBehavior] = useState(""); // set the behavior to be used in the video
   const [surveyVids, setSurveyVids] = useState([]); // setting the videos to be used in the survey
@@ -81,10 +85,10 @@ export default function VideoPairApp_simple() {
   const specificBehavior = "linear";
 
 useEffect(() => {
+  // Timing background render upon survey start up
   const timer = setTimeout(() => {
     setTitleFloat(true);
   }, 50); // small delay ensures first render happens at opacity 0
-
   return () => clearTimeout(timer);
 }, []);
 
@@ -140,6 +144,37 @@ useEffect(() => {
     return `${prefix}/${id}`.replace("/\/g", "/");
   };
 
+
+  useEffect(() => {
+     const loadExcel = async() => {
+        const ExcelJS = require('exceljs');
+        const res = await fetch(process.env.PUBLIC_URL + '/demographics_options.xlsx');
+    
+        const buffer = await res.arrayBuffer();
+        const workbook = new ExcelJS.Workbook();
+        await workbook.xlsx.load(buffer);
+        const sheet = workbook.worksheets[0]; // get first sheet
+
+        // get countries
+        const datacountries = sheet.getColumn('A').values.slice(1); // array of rows
+        const countryList = datacountries.flat().filter(Boolean);             // flatten to 1D list
+        setCountries(countryList);
+
+        // get languages
+        const datalanguages = sheet.getColumn('B').values.slice(1); // array of rows
+        const languagesList = datalanguages.flat().filter(Boolean);             // flatten to 1D list
+        setLanguages(languagesList);
+
+        // get professions
+        const dataprofessions = sheet.getColumn('C').values.slice(1); // array of rows
+        const professionsList = dataprofessions.flat().filter(Boolean);             // flatten to 1D list
+        setProfessions(professionsList);
+     };
+     loadExcel();
+     console.log(countries);
+  }, [demographics]);
+  
+  // fetch videos from list based on behavior
   function indexExcluding(arr_len, index) {
     if (arr_len <= 1) return null;
     const indices = [];
@@ -247,14 +282,15 @@ useEffect(() => {
 
 // Error checking for each question
   const validate = () => { // checks to see if all required questions are filled out
-       const recentErrors = {}
+       const recentErrors = {};
        console.log("inside validate\n");
        console.log(demographicsData);
-       if (demographicsData["age"] == 0) recentErrors.age = "Please select an age range.";
-       if (demographicsData["highestDegree"] == "") recentErrors.highestDegree = "Please select from the dropdown the highest degree you have attained.";
-       if (demographicsData["country"] == "" || demographicsData["country"] == "Enter your country") recentErrors.country = "Please select your country from the dropdown.";
-       if (demographicsData["languages"] == "" || demographicsData["languages"] == "Languages") recentErrors.language = "Please enter any languages you know.";
-       if (demographicsData["profession"] == "" || demographicsData["profession"] == "Enter your profession") recentErrors.profession = "Please enter any languages you know.";
+       if (demographicsData["age"] == 0 || demographicsData["age"] == "Age") recentErrors.age = "Please select an age range.";
+       if (demographicsData["highestDegree"] == "" || demographicsData["highestDegree"] == "Degree") recentErrors.highestDegree = "Please select from the dropdown the highest degree you have attained.";
+       if (demographicsData["country"] == "" || demographicsData["country"] == "Country") recentErrors.country = "Please select your country from the dropdown.";
+       if (demographicsData["language"] == "" || demographicsData["language"] == "Language") recentErrors.language = "Please enter any languages you know from the dropdown.";
+       if (demographicsData["profession"] == "" || demographicsData["profession"] == "Professions") recentErrors.profession = "Please enter your current profession from the dropdown.";
+       console.log(demographicsData);
        console.log(recentErrors);
        setErrors(recentErrors);
        return Object.keys(recentErrors).length === 0; // check if number of errors is zero.
@@ -556,7 +592,9 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
         </Box>
         <Button sx={{ margin: '48px 0 0', backgroundColor: "#FFF", fontWeight: 'bold', fontSize: '15px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#9a9690', border: '1px solid rgba(26,25,23,0.2)', borderRadius: '4px', padding: '10px 28px', '&:hover': { color: '#1a1917', borderColor: '#2a2a8c', backgroundColor: 'transparent' }, }} variant="contained" onClick={() => {
            // goes to the next screen for getting user demographics
+           console.log("clicked the start");
            setStartInstructions(false);
+           setPreSurvey(false);
            setDemographics(true);
            setTitleFloat(true);
         }}>
@@ -661,7 +699,7 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
          <Typography sx={{ margin: '15px', fontFamily: "'DM Mono', monospace", fontWeight: 'bold', fontSize: '15px', letterSpacing: '0.16em', textTransform: 'uppercase', color: '#FFF', borderLeft: '50px solid rgba(0,0,0,0)', position: 'fixed', top:'0px',  }}> Exalabs UMass Lowell </Typography>
       </Box>
       <Box sx={{borderRadius: '10px', display: 'flex', flexDirection: 'column',  width: '50%', height: '80%', border: '2px solid #001000', margin: '10% 0 0 0', }}>
-        <DemographicsForm errors={errors}/>
+        <DemographicsForm errors={errors} countries={countries} languages={languages} professions={professions}/>
         <Button sx={{ margin: '48px 0 0', backgroundColor: "#FFF", fontWeight: 300, fontSize: '15px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#9a9690', border: '1px solid rgba(26,25,23,0.2)', borderRadius: '4px', padding: '10px 28px', '&:hover': { color: '#1a1917', borderColor: '#2a2a8c', backgroundColor: 'transparent' }, }} variant="contained" onClick={() => {
            // goes to the next screen for getting user demographics
            if (validate()) {
@@ -719,14 +757,21 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
 		Thank you for participating in this study conducted by Exalabs!
 	   </Typography>
         </Box>
+
         <EmailBox xpos='0%' ypos='20%'/>
+<Button sx= {{ gap: '50px', margin: '50px 0', borderBottom: '100px', color: '#000', border: '1px solid #000', '&:hover': { backgroundColor: 'rgba(150, 220, 255, 0.9)', color: '#FFF', border: '1px solid #000',}, fontSize: '25px', }} onClick={restart}>Restart</Button>
+        <Box>
+           <Typography sx={{fontWeight: '', fontSize: '20px', fontFamily: "'Cormorant Garamond', Georgia, serif", alignItems: 'center', justifyContent: 'center', display: 'flex', position: 'relative', margin: '30px', color: '#000',}}>
+		To learn more, click on <Link to="/components/info" style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", color: '#31F5A7', }}>this link</Link>!
+	   </Typography>
+        </Box>
         
        </div>
       </>
     );
   }
 
-/*<Button sx= {{ gap: '50px', margin: '50px 0', borderBottom: '100px', color: '#000', border: '1px solid #000', '&:hover': { backgroundColor: 'rgba(150, 220, 255, 0.9)', color: '#FFF', border: '1px solid #000',}, fontSize: '25px', }} onClick={restart}>Restart</Button>
+/*
         */
 
   if (!pair || pair.length < 2) {
@@ -1316,7 +1361,7 @@ const getFile = () => {
       let demoColumns = ["", "", "", "", ""];
       if (index === 0) demoColumns = ["", "Level of Education", demographicsData["degree"]];
       if (index === 1) demoColumns = ["", "Country", demographicsData["country"]];
-      if (index === 2) demoColumns = ["", "Spoken Languages", demographicsData["languages"]];
+      if (index === 2) demoColumns = ["", "Spoken Languages", demographicsData["language"]];
       if (index === 3) demoColumns = ["", "Profession", demographicsData["profession"]];
 
       return [
@@ -1588,11 +1633,11 @@ function renderEmail() {
 
 
 /* DEMOGRAPHICS */
-function DemographicsForm({ errors }) {
+function DemographicsForm({ errors, countries, languages, professions }) {
     const [age, setAge] = useState("");
     const [highestDegree, setHighestDegree] = useState("");
     const [country, setCountry] = useState("");
-    const [languages, setLanguages] = useState("");
+    const [language, setLanguage] = useState("");
     const [profession, setProfession] = useState("");
     const ages = ["18 - 22 years", "23 - 27 years", "28 - 32 years",  "33 - 37 years", "38 - 42 years", "43 - 47 years"];
     const degrees = ["High School Diploma", "Bachelor's", "Graduate/Master's", "Ph.D/Doctorate"];
@@ -1631,70 +1676,48 @@ function DemographicsForm({ errors }) {
            </Box>
            <Box sx={{ display: 'flex', flexDirection: 'column', marginBottom: 2 }}>
                <Typography sx={{  }}> What country are you from? </Typography>
-                   <TextField
-                        id="outlined-required"
-                        label="Optional"
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                            setCountry(e.target.value);
-                            demographicsData["country"] = e.target.value;
-			    console.log("demographics data: ", demographicsData["country"]);
-                            if (e.target.value == "Enter your country") {
-                                demographicsData["country"] = "";
-                            }
-                        }}
-                        variant="outlined"
-                        defaultValue="Enter your country"
-                        error={!!errors.country} 
-                        helperText={errors.country}
-                   />
+                   <Select value={country} required onChange={(e) => {
+                          setCountry(e.target.value);
+                          demographicsData["country"] = e.target.value; 
+                          console.log("demographics data: ", demographicsData["country"]);
+                       }} displayEmpty>
+                       {countries.map((s) => (
+                           <MenuItem  key={s} value={s}>
+                                {s}
+                           </MenuItem>
+                       ))}
+                   </Select>
+                   {errors.highestDegree && <Typography color="error" variant="caption">{errors.country}</Typography>}
            </Box>
            <Box sx={{ display: 'flex', flexDirection: 'column', marginBottom: 2 }}>
                <Typography sx={{  }}> Are you multilingual? If so, enter your languages: </Typography>
-                   <TextField
-                        required
-                        id="outlined-required"
-                        label="Required"
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                            setLanguages(e.target.value);
-                            demographicsData["languages"] = e.target.value;
-			    console.log("demographics data: ", demographicsData["languages"]);
-                            if (e.target.value == "Languages") {
-                                demographicsData["languages"] = "";
-                            }
-                            if (e.target.value.includes(",")) {
-                                demographicsData["languages"] = '"'.concat(demographicsData["languages"], '"');
-			    console.log("demographics data: ", demographicsData["languages"]);
-
-                            }
-                        }}
-                        variant="outlined"
-                        defaultValue="Languages"
-                        error={!!errors.languages} 
-                        helperText={errors.languages}
-                   />
+                   <Select value={language} required onChange={(e) => {
+                          setLanguage(e.target.value);
+                          demographicsData["language"] = e.target.value; 
+                          console.log("language data: ", demographicsData["language"]);
+                       }} displayEmpty>
+                       {languages.map((s) => (
+                           <MenuItem  key={s} value={s}>
+                                {s}
+                           </MenuItem>
+                       ))}
+                   </Select>
+                   {errors.language && <Typography color="error" variant="caption">{errors.language}</Typography>}
            </Box>
            <Box sx={{ display: 'flex', flexDirection: 'column', marginBottom: 2 }}>
                <Typography sx={{  }}> What best describes your profession? </Typography>
-                   <TextField
-                        id="outlined-required"
-                        label="Optional"
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                            setProfession(e.target.value);
-                            demographicsData["profession"] = e.target.value;
-			    console.log("demographics data: ", demographicsData["profession"]);
-                            if (e.target.value == "Profession") {
-                                demographicsData["profession"] = "";
-                            }
-                            if (e.target.value.includes(",")) {
-                                demographicsData["profession"] = '"'.concat(demographicsData["profession"], '"');
-console.log("demographics data: ", demographicsData["profession"]);
-                            }
-                        }}
-                        variant="outlined"
-                        defaultValue="Enter your profession"
-                        error={!!errors.profession} 
-                        helperText={errors.profession}
-                   />
+                   <Select value={profession} required onChange={(e) => {
+                          setProfession(e.target.value);
+                          demographicsData["profession"] = e.target.value; 
+                          console.log("demographics data: ", demographicsData["profession"]);
+                       }} displayEmpty>
+                       {professions.map((s) => (
+                           <MenuItem  key={s} value={s}>
+                                {s}
+                           </MenuItem>
+                       ))}
+                   </Select>
+                   {errors.profession && <Typography color="error" variant="caption">{errors.profession}</Typography>}
            </Box>
        </Box>
     );

@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import VideoSorter from './App_noflex';
 import VideoPairApp from './App_onebyone';
 import VideoPairApp_simple from './App_onebyone_simple';
 
