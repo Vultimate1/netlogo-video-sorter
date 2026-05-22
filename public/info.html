@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Free Web tutorials">
+  <meta name="keywords" content="HTML, CSS, JavaScript">
+  <meta name="author" content="John Doe">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  </head>
+  <body class="full-container">
+    <a href="https://exalabs-umass-lowell.github.io/netlogo-video-sorter/" class="back-button" target="_blank">BACK TO SURVEY</a>
+    <div class="container-vertical">
+      <div class="topbanner">
+          <div class="toplogo"></div>
+          <div>Exalabs UMass Lowell</div>
+      </div>
+    <p/>
+    <div class="mainheader">
+      Identifying Emergent Behavior in Swarms
+    </div>
+    <div class="submainheader">
+      Sriram Krishnamoorthy, Advisor: Kshitij Jerath
+    </div>
+    <div class="container-horizontal">
+      <nav class="nav">
+        <span class="nav-subheader">What is Emergent Behavior?</span>
+	    <a class="nav-span" href="#problem-statement">Problem Statement</a>
+	    <a class="nav-span" href="#examples">Past Studies</a> 
+        <span class="nav-subheader">Our Research</span> 
+	    <a class="nav-span" href="#goals">Our Goals</a>
+            <a class="nav-span" href="#tools">Tools</a> 
+	    <a class="nav-span" href="#projects">Projects</a>
+            <a class="nav-span" href="#concepts">Concepts</a> 
+      </nav>
+      <div class="container-vertical">
+      <div class="section">
+        <div class="subheader">
+          What is Emergent Behavior?
+        </div>
+        <div class="subsubheader">
+          Description
+        </div>
+        <div class="sectionbody">
+          <b>Definition:</b> A key concept in the study of autonomous robots to enable complex and adaptive behaviors from simple rules and interactions between individual robots
+        </div>
+        <div class="sectionbody" id="problem-statement">
+          <b>Problem statement:</b> 
+             <ul>
+                <li>Military tactics require prediction of drone swarm behavior, given the increasing integration of drone swarms in defense and reconnaissance. </li>
+                <li>Swarm algorithms have been modeled off insect behavior, such as ants and bees, and work based off hive mind methodology.  While widely recognizable by humans, automating this technology is necessary to increase accuracy and speed in using swarm behavior implementation to predict future behavior of opposite swarms.</li>  
+                <li>This requires repeated monitoring of mobile data such as pose, trajectory, center of mass, and boundary-boundary interactions within a swarm, as well as the overall shape of the swarm over time.</li>  
+                <li>Making training neural networks more efficient to interpolate emergent behavior of swarms is important for being able to replicate this behavior and achieve savings in cost and time.</li>
+             </ul>
+        </div>
+        <div class="subsubheader" id="examples">
+          Examples
+        </div>
+        <div class="sectionbody">
+           <ul>
+              <li><b>Bird flocks:</b> Groups of birds travel together for migration and transportation.
+              <li><b>Ant colonies:</b> Groups of ants communicate through pheromones to create the shortest path to find food for the colony.
+              <li><b>Schools of fish:</b> Fish travel in complex coordinated patterns to confuse predators and to get to the nearest source of food.
+        </div>
+      </div>
+      <div class="section">
+        <div class="subheader">Our Research</div>
+          <div class="subsubheader" id="goals">Our Goals</div>
+          <div class="subsubheader" id="tools">Tools</div>
+             <div style="" id="netlogo">
+               <ul class="sectionbodylist">
+                 <p class="sectionbodylistheader"><b>NetLogo</b></p>
+                 <li><b>Purpose</b>: Recording drone simulations
+                 <li><b>How it works</b>:
+                 <p>
+                 <ul><u>Features</u>
+                    <li>Agent(s): Any moving autonomous object
+                    <li>Couzin swarm: A set of autonomous agents that move and interact with each other, forming an overarching behavior after a long period of time
+                 </ul>
+                 <ul class="sectionbodylist">Procedure</u>
+                    <li>Set parameters:
+                      <ul> 
+                        <li>Minimum Vision: How many agents can each agent see at a time?
+                        <li>Minimum Separation: The minimum proximity between each agent at a given time
+                        <li>Maximum Alignment Turn: The maximum angle any agent turns at a given time to align with an adjacent agent
+                        <li>Maximum Coherence Turn: The maximum angle any agent turns at a given time to adhere to an overarching pattern or cluster behavior
+                        <li>Maximum Separation Turn: The maximum angle any agent turns at a given time to deviate from a cluster
+                        <li>Population: The number of agents in the swarm
+                      </ul>
+                    <li>Set recording parameters:
+                        <ul>
+                            <li>Set simulation time (1 - 5 minutes).
+                            <li>Enable recording.
+                        </ul>
+                    <li>Start recording!
+                 </ul>
+               </ul>
+               <figure>
+                 <img src="netlogo-sample-setup.png" style="width:100%"
+                 <figcaption>Sample NetLogo Drone Swarm Setup</figcaption>
+               </figure>
+             </div>
+             
+          <div class="subsubheader" id="projects">Projects</div>
+          <div class="subsubheader" id="concepts">Concepts</div>
+      </div>
+      <div class="section">
+        <div class="subheader">
+          Progress
+        </div>
+      </div>
+      <div class="nav-bottom">
+	  <a href="#contact-us" class="active">Contact Us</a>
+	  <a href="#more-info" class="active">More Info</a>
+	  <a href="#github" class="active">GitHub</a>
+      </div>
+      </div>
+    </div>
+    </div>
+  </body>
+</html>

@@ -762,7 +762,8 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
 <Button sx= {{ gap: '50px', margin: '50px 0', borderBottom: '100px', color: '#000', border: '1px solid #000', '&:hover': { backgroundColor: 'rgba(150, 220, 255, 0.9)', color: '#FFF', border: '1px solid #000',}, fontSize: '25px', }} onClick={restart}>Restart</Button>
         <Box>
            <Typography sx={{fontWeight: '', fontSize: '20px', fontFamily: "'Cormorant Garamond', Georgia, serif", alignItems: 'center', justifyContent: 'center', display: 'flex', position: 'relative', margin: '30px', color: '#000',}}>
-		To learn more, click on <Link to="/components/info" style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", color: '#31F5A7', }}>this link</Link>!
+		To learn more, click on
+                <a href={`${process.env.PUBLIC_URL}/info.html`} rel="noopener noreferrer"  style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", color: '#31F5A7', }}>this link</a>!
 	   </Typography>
         </Box>
         
