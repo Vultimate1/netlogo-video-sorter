@@ -7,9 +7,10 @@
   <meta name="author" content="John Doe">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   </head>
   <body class="full-container">
-    <a href="https://exalabs-umass-lowell.github.io/netlogo-video-sorter/" class="back-button" target="_blank">BACK TO SURVEY</a>
+    <a href="https://exalabs-umass-lowell.github.io/netlogo-video-sorter/" rel="noopener noreferrer" class="back-button" target="_blank">BACK TO SURVEY</a>
     <div class="container-vertical">
       <div class="topbanner">
           <div class="toplogo"></div>
@@ -26,11 +27,9 @@
       <nav class="nav">
         <span class="nav-subheader">What is Emergent Behavior?</span>
 	    <a class="nav-span" href="#problem-statement">Problem Statement</a>
-	    <a class="nav-span" href="#examples">Past Studies</a> 
         <span class="nav-subheader">Our Research</span> 
 	    <a class="nav-span" href="#goals">Our Goals</a>
             <a class="nav-span" href="#tools">Tools</a> 
-	    <a class="nav-span" href="#projects">Projects</a>
             <a class="nav-span" href="#concepts">Concepts</a> 
       </nav>
       <div class="container-vertical">
@@ -100,19 +99,22 @@
                  <figcaption>Sample NetLogo Drone Swarm Setup</figcaption>
                </figure>
              </div>
-             
-          <div class="subsubheader" id="projects">Projects</div>
           <div class="subsubheader" id="concepts">Concepts</div>
-      </div>
-      <div class="section">
-        <div class="subheader">
-          Progress
-        </div>
-      </div>
-      <div class="nav-bottom">
-	  <a href="#contact-us" class="active">Contact Us</a>
-	  <a href="#more-info" class="active">More Info</a>
-	  <a href="#github" class="active">GitHub</a>
+          <div class="sectionbody">
+             <u><b>Bradley-Terry Method</b></u>
+             <ul>
+                 <li>Purpose: Statistical inference method for ranking multiple items based on a particular parameter via multiple comparisons between pairs of those items
+                 <li>Equations:
+                     <ul><li>Probability item A exceeds item B:
+                           <p>$$\log\frac{p_{ij}}{1 - p_{ij}} = \beta_i - \beta_j$$</p>
+                           <p>where</p>
+                           <p>$$p_{ij} = \frac {e^{\beta_i - \beta_j}} {1 - e^{\beta_i - \beta_j}} = \frac{e^{\beta_i}}{e^{\beta_i} + e^{\beta_j}}$$
+                           <p>\(\beta_i\): Probabilistic strength of item <i>i</i></p>
+                           <p>\(p_{ij}\): Independent random variable for probability item <i>i</i> is greater than item <i>j</i>
+                           <p><b>Purpose:</b> Given a series of Bernoulli trials between these two items in a set of items, these show the odds of the strength of item <i>i</i> exceeding item <i>j</i>, with <b> \(\beta_i - \beta_j\) </b> giving the confidence interval of the difference between the two items
+                     </ul>
+             </ul>
+          </div>
       </div>
       </div>
     </div>
