@@ -23,6 +23,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import emailjs from 'emailjs-com';
 import { keyframes } from "@mui/system";
 import axios from "axios";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 // VideoPairApp.jsx
 let demographicsData = {"age": 0, "degree": "", "country": "", "languages": "", "profession": ""}
@@ -31,6 +32,7 @@ let selectionTimes = {};
 let notSelectionTimes = {};
 let resultsFile = "";
 let resultsName = "";
+const REGISTRATION_API_URL = "https://netlogo-survey-registration.onrender.com";
 
 export default function VideoPairApp_simple() {
   // CSS components
@@ -87,8 +89,13 @@ export default function VideoPairApp_simple() {
   const specificBehavior = "linear";
 
 useEffect(() => {
-  const fetched_email = URLSearchParams(window.location.search).get('email');
-  setUserEmail(fetched_email); // get logged in email
+
+  // fetch user email
+  const params = new URLSearchParams(window.location.search);
+  const fetched_email = params.get('email');
+  if (fetched_email) {
+    setUserEmail(decodeURIComponent(fetched_email));
+  }
 
   // Timing background render upon survey start up
   const timer = setTimeout(() => {
@@ -103,6 +110,7 @@ useEffect(() => {
     .then(res => res.json())
     .then(data => setComplete(data.completed ? true : false))
     .catch(() => setComplete(false)); // decide fail-open vs fail-closed
+  console.log("is it complete? ", complete);
 }, [userEmail]);
 
 // displaying instructions
