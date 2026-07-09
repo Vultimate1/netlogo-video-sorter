@@ -45,6 +45,8 @@ export default function VideoPairApp_simple() {
   };
 
   // states
+  const [complete, setComplete] = useState(false); // has user completed survey already
+  const [userEmail, setUserEmail] = useState(null); // user email
   const [startInstructions, setStartInstructions] = useState([]); // reading the opening instructions
   const [preSurvey, setPreSurvey] = useState([]); // reading the pre-survey instructions
   const [samplePair, setSamplePair] = useState(false); // display sample pair
@@ -85,12 +87,23 @@ export default function VideoPairApp_simple() {
   const specificBehavior = "linear";
 
 useEffect(() => {
+  const fetched_email = URLSearchParams(window.location.search).get('email');
+  setUserEmail(fetched_email); // get logged in email
+
   // Timing background render upon survey start up
   const timer = setTimeout(() => {
     setTitleFloat(true);
   }, 50); // small delay ensures first render happens at opacity 0
   return () => clearTimeout(timer);
 }, []);
+
+useEffect(() => {
+  if (!userEmail) return;
+  fetch(`${REGISTRATION_API_URL}/check-completed?email=${encodeURIComponent(userEmail)}`)
+    .then(res => res.json())
+    .then(data => setComplete(data.completed ? true : false))
+    .catch(() => setComplete(false)); // decide fail-open vs fail-closed
+}, [userEmail]);
 
 // displaying instructions
 useEffect(() => {
@@ -560,7 +573,30 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
   function disp(time) {
     text += String(time) + ",";
   }
-
+  if (complete) {
+    return (
+      <div style={{ justifyContent: 'flex-start', alignItems: 'center', flexDirection: 'column', display: 'flex', width: '100%', minHeight: '100vh', overflowX: 'hidden', background: `url('general-white-blue.jpg')`, transition: 'background-image 0.5s ease', backgroundSize: '100% 100%, 100% 100%, contain', backgroundPosition: 'center, center, center', backgroundRepeat: 'no-repeat, no-repeat, no-repeat', backgroundBlendMode: 'multiply',}}>
+         <Box sx={{
+           width: '100%',
+           height: 'flex',
+           display: 'flex',
+           backgroundColor: "rgba(0,0,0,0.5)",
+           position: 'fixed', top:'0px', left: '0px', 
+         }}>
+           <Box 
+              component="img"
+              sx={{height:'50px',alignItems:'center',justifyContent:'center',display:'flex',top:'0px',left:'0px',}}
+              src={`${process.env.PUBLIC_URL}/exalabs-logo.png`}
+           />
+           <Box sx={{ justifyContent: 'flex-start', alignItems: 'center', }}>
+              <Typography sx={{  fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 25, }}>
+		You have already completed this survey as {' '} <strong>{userEmail}</strong> 
+              </Typography>
+           </Box>
+         </Box>
+      </div>
+    );
+  }
   if (startInstructions) {
     return (
       <div style={{ justifyContent: 'flex-start', alignItems: 'center', flexDirection: 'column', display: 'flex', width: '100%', minHeight: '100vh', overflowX: 'hidden', background: `url('general-white-blue.jpg')`, transition: 'background-image 0.5s ease', backgroundSize: '100% 100%, 100% 100%, contain', backgroundPosition: 'center, center, center', backgroundRepeat: 'no-repeat, no-repeat, no-repeat', backgroundBlendMode: 'multiply',}}>
