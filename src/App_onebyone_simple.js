@@ -13,6 +13,7 @@ import {   Button,
   DialogActions,
   CircularProgress,
   Collapse, 
+  Checkbox, FormControlLabel, FormGroup,
   IconButton, IconButtonProps,
   Fade,
   Menu, MenuProps, MenuItem,
@@ -23,16 +24,16 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import emailjs from 'emailjs-com';
 import { keyframes } from "@mui/system";
 import axios from "axios";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 // VideoPairApp.jsx
-let demographicsData = {"age": 0, "degree": "", "country": "", "languages": "", "profession": ""}
+let demographicsData = {"age": 0, "degree": "", "country": "", "languages": "", "profession": ""};
 let rankedVideos = {};
 let selectionTimes = {};
 let notSelectionTimes = {};
 let resultsFile = "";
 let resultsName = "";
 const REGISTRATION_API_URL = "https://netlogo-survey-registration.onrender.com";
+
 
 export default function VideoPairApp_simple() {
   // CSS components
@@ -49,6 +50,7 @@ export default function VideoPairApp_simple() {
   // states
   const [complete, setComplete] = useState(false); // has user completed survey already
   const [userEmail, setUserEmail] = useState(null); // user email
+  const [userIPAddress, setUserIPAddress] = useState("");
   const [startInstructions, setStartInstructions] = useState([]); // reading the opening instructions
   const [preSurvey, setPreSurvey] = useState([]); // reading the pre-survey instructions
   const [samplePair, setSamplePair] = useState(false); // display sample pair
@@ -88,8 +90,30 @@ export default function VideoPairApp_simple() {
   const [numVideos, setNumVideos] = useState(0);
   const specificBehavior = "linear";
 
-useEffect(() => {
+const getIP = async() => {
+  try {
+    const response = await fetch("https://swarm-backend-ga0y.onrender.com/ip");
+    console.log("after response sent");
+    if (!response.ok) {
+      throw new Error(`HTTP error: status ${response.status}`);
+    }  
+    const data = await response.json();
+    console.log("IP address is: ", data.ip);
+    setUserIPAddress( data.ip );
+  } catch (error) {
+    console.log("Failed to fetch IP address: "+ error);
+  }	
+};
 
+useEffect(() => {
+  if (userIPAddress) {
+    console.log("User IP is now:", userIPAddress);
+  }
+}, [userIPAddress]);
+
+useEffect(() => {
+  getIP();
+  
   // fetch user email
   const params = new URLSearchParams(window.location.search);
   const fetched_email = params.get('email');
@@ -227,12 +251,14 @@ const floatFadeIn = keyframes`
 
 // generate the pairs of videos according to the list of videos for the probabilistic selection of videos as per the Bradley-Terry method
 function generatePairs(videos) {
+  console.log("WE HAVE "+ (videos).length + " VIDEOS");
   const p = [];
   for (let i = 0; i < videos.length; i++) {
     for (let j = i + 1; j < videos.length; j++) {
       p.push([videos[i], videos[j]]);
     }
   }
+  console.log("WE HAVE "+p.length + " PAIRS");
   return p;
 }
 
@@ -802,7 +828,7 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
 	   </Typography>
         </Box>
 
-        <EmailBox xpos='0%' ypos='20%'/>
+        <EmailBox xpos='0%' ypos='20%' userIP={userIPAddress}/>
 <Button sx= {{ gap: '50px', margin: '50px 0', borderBottom: '100px', color: '#000', border: '1px solid #000', '&:hover': { backgroundColor: 'rgba(150, 220, 255, 0.9)', color: '#FFF', border: '1px solid #000',}, fontSize: '25px', }} onClick={restart}>Restart</Button>
         <Box>
            <Typography sx={{fontWeight: '', fontSize: '20px', fontFamily: "'Cormorant Garamond', Georgia, serif", alignItems: 'center', justifyContent: 'center', display: 'flex', position: 'relative', margin: '30px', color: '#000',}}>
@@ -875,11 +901,11 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: 'center',  marginBottom: '10px',}}>
            <Typography sx={{fontSize: 22, fontFamily: "'Cormorant Garamond', Georgia, serif"}}>PROGRESS</Typography>
 	   <div style={{ display: "flex", alignItems: 'center', gap: '10px',}}>
-              <Typography sx={{fontSize: 30, fontWeight: 'bold', fontFamily: "'Cormorant Garamond', Georgia, serif"}}>{vidnum - 1}</Typography>/<Typography sx={{fontSize: 22, fontFamily: "'Cormorant Garamond', Georgia, serif"}}>{numVideos+1} pairs complete</Typography>
+              <Typography sx={{fontSize: 30, fontWeight: 'bold', fontFamily: "'Cormorant Garamond', Georgia, serif"}}>{vidnum - 1}</Typography>/<Typography sx={{fontSize: 22, fontFamily: "'Cormorant Garamond', Georgia, serif"}}>{numVideos} pairs complete</Typography>
            </div>
         </div>
         <div style={{ display: "flex", justifyContent: "center", }} >
-           <ProgressBar number={vidnum - 1} total={numVideos+1} />
+           <ProgressBar number={vidnum-1} total={numVideos} />
         </div>
       </div>   
 
@@ -923,10 +949,10 @@ function Timerbox({ start, time_to_choose }) {
 function ProgressBar({ number, total }) {
     return (
     <Box sx={{ display: 'flex', width:'100%', height:24, display:'flex', borderRadius: '5px', position: 'relative',  overflow: 'hidden' }}>
-      <Box sx={{backgroundColor: '#31F5A7', width: `${(number/total)*100}%`}}>
+      <Box sx={{backgroundColor: '#31F5A7', width: `${(number/(total))*100}%`}}>
       </Box>
-      <Box sx={{backgroundColor: '#778385', width: `${100 - (number/total)*100}%`}}/>
-      <Typography sx={{position: 'absolute', top: '50%', left:'50%', transform:'translate(-50%, -50%)',}}><strong>{Math.round((number/total)*100)}%</strong></Typography>
+      <Box sx={{backgroundColor: '#778385', width: `${100 - (number/(total))*100}%`}}/>
+      <Typography sx={{position: 'absolute', top: '50%', left:'50%', transform:'translate(-50%, -50%)',}}><strong>{Math.round((number/(total))*100)}%</strong></Typography>
     </Box>
     );
 }
@@ -1373,7 +1399,7 @@ const parseParams = (filename) => {
     return [date, params];
 }
 
-const getFile = () => {
+const getFile = (userIP) => {
     // 1. Define CSV headers
 
     let date = new Date();
@@ -1408,10 +1434,10 @@ const getFile = () => {
       if (index === 1) demoColumns = ["", "Country", demographicsData["country"]];
       if (index === 2) demoColumns = ["", "Spoken Languages", demographicsData["language"]];
       if (index === 3) demoColumns = ["", "Profession", demographicsData["profession"]];
-
+      
       return [
         index+1, // Current Rank
-        name, 
+        url, 
         ...paramValues, 
         ...demoColumns
       ].join(',');
@@ -1428,6 +1454,8 @@ const getFile = () => {
       "population",
       "",
       "Age", demographicsData["age"], 
+      "",
+      userIP
     ];
     console.log("csvrows: "+csvRows);
     const content = [
@@ -1474,7 +1502,7 @@ const getFile = () => {
 
 
     const new_content = [
-      'Ranked videos, , , , , , , , ,Demographics',
+      'Ranked videos, , , , , , , , ,Demographics, , ,IP Address',
       ...content,
       '',
       '',
@@ -1508,7 +1536,7 @@ const downloadOrderAsCSV = () => {
 
 
 // button to email results
-function EmailBox({ xpos, ypos }) {
+function EmailBox({ xpos, ypos, userIP }) {
   const [open, setOpen] = React.useState(false);
 
   async function renderEmail() {
@@ -1533,7 +1561,7 @@ function EmailBox({ xpos, ypos }) {
       alert("Error sending email " + err);
     }*/
 
-  let [resultsFile, resultsContent] = getFile();
+  let [resultsFile, resultsContent] = getFile(userIP);
   const file = new File([resultsContent], resultsFile, { type: "text/csv" });
   // sending the information from the survey in the expected format
   const formData = new FormData();
@@ -1686,6 +1714,15 @@ function DemographicsForm({ errors, countries, languages, professions }) {
     const [profession, setProfession] = useState("");
     const ages = ["18 - 22 years", "23 - 27 years", "28 - 32 years",  "33 - 37 years", "38 - 42 years", "43 - 47 years"];
     const degrees = ["High School Diploma", "Bachelor's", "Graduate/Master's", "Ph.D/Doctorate"];
+   
+    const handleChanged = (value) => {
+       setLanguage((prev) => {
+          const updated = prev.includes(value) ? prev.filter((item) => item !== value) : [...prev, value];
+          demographicsData["language"] = updated.join(",");
+          console.log(demographicsData["language"]);
+          return updated;
+       });
+    };
 
     return (
        <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'left', marginLeft: '5%', }}>
@@ -1736,17 +1773,16 @@ function DemographicsForm({ errors, countries, languages, professions }) {
            </Box>
            <Box sx={{ display: 'flex', flexDirection: 'column', marginBottom: 2 }}>
                <Typography sx={{  }}> Are you multilingual? If so, enter your languages: </Typography>
-                   <Select value={language} required onChange={(e) => {
-                          setLanguage(e.target.value);
-                          demographicsData["language"] = e.target.value; 
-                          console.log("language data: ", demographicsData["language"]);
-                       }} displayEmpty>
+                   <Box sx={{maxHeight: 100, overflowY: 'auto', borderRadius: 1, border: '1px solid #D4D0CF'}}>
+                   <FormGroup >
                        {languages.map((s) => (
-                           <MenuItem  key={s} value={s}>
-                                {s}
-                           </MenuItem>
+                           <FormControlLabel key={s} label={s} required displayEmpty control={
+                           <Checkbox  checked={language.includes(s)} onChange={() => handleChanged(s)} />
+                               
+                           } />
                        ))}
-                   </Select>
+                   </FormGroup>
+                   </Box>
                    {errors.language && <Typography color="error" variant="caption">{errors.language}</Typography>}
            </Box>
            <Box sx={{ display: 'flex', flexDirection: 'column', marginBottom: 2 }}>
