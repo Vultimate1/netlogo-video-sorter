@@ -1,3 +1,31 @@
+@font-face {
+	font-family: 'Barlow';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url('fonts/barlow-latin-400-normal.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'Barlow';
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+	src: url('fonts/barlow-latin-600-normal.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'Barlow';
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url('fonts/barlow-latin-700-normal.woff2') format('woff2');
+}
+
+body {
+	font-family: 'Barlow', Arial, sans-serif;
+}
+
 .toplogo {
 	background-image: url('exalabs-logo.png');
 	background-size: cover;
@@ -22,7 +50,7 @@
 	flex-direction: row;
 	display: flex;
 	color: #fff;
-	font-family: "Cormorant Garamond", Georgia, serif;
+	font-family: "Barlow", Arial, sans-serif;
 	align-items: center;
 }
 
@@ -102,7 +130,7 @@
 	padding-left: 150px;
 	font-weight: 600;
 	flex-direction: 'column';
-	font-family: "Cormorant Garamond", Georgia, serif;
+	font-family: "Barlow", Arial, sans-serif;
 	padding-top: 25px;
 	padding-bottom: 25px;
 }
@@ -114,20 +142,20 @@
 	text-align: center;
 	padding-left: 150px;
 	flex-direction: 'column';
-	font-family: "Cormorant Garamond", Georgia, serif;
+	font-family: "Barlow", Arial, sans-serif;
 	padding-top: 10px;
 	padding-bottom: 10px;
 }
 
 .subheader {
 	font-size: 20px;
-	font-family: "Cormorant Garamond", Georgia, serif;
+	font-family: "Barlow", Arial, sans-serif;
 	padding-bottom: 15px;	
 }
 
 .subsubheader {
 	font-size: 18px;
-	font-family: "Cormorant Garamond", Georgia, serif;
+	font-family: "Barlow", Arial, sans-serif;
 	padding-top: 15px;
 	padding-bottom: 6px;	
         padding-left: 8px;
@@ -182,7 +210,7 @@
 	background-color: #666E6E;
 	padding: 10px;
 	padding-left: 15px;
-	font-family: "Arial";
+	font-family: "Barlow", Arial, sans-serif;
 }
 
 .back-button {
@@ -192,7 +220,7 @@
 	top: 70px;
 	right: 25px;
 	text-decoration: none;
-	font-family: "Arial";
+	font-family: "Barlow", Arial, sans-serif;
 	font-weight: bold;
 	padding-top: 30px;
 	padding: 12px 20px;

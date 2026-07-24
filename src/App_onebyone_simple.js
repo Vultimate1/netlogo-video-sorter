@@ -551,7 +551,7 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
               src={`${process.env.PUBLIC_URL}/exalabs-logo.png`}
            />
            <Box sx={{ justifyContent: 'flex-start', alignItems: 'center', }}>
-              <Typography sx={{  fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 25, }}>
+              <Typography sx={{  fontFamily: "'Barlow', Arial, sans-serif", fontSize: 25, }}>
 		You have already completed this survey as {' '} <strong>{userEmail}</strong> 
               </Typography>
            </Box>
@@ -574,7 +574,7 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
             sx={{height:'50px',alignItems:'center',justifyContent:'center',display:'flex',top:'0px',left:'0px',}}
             src={`${process.env.PUBLIC_URL}/exalabs-logo.png`}
          />
-         <Typography sx={{ margin: '15px', fontFamily: "'DM Mono', monospace", fontWeight: 'bold', fontSize: '15px', letterSpacing: '0.16em', textTransform: 'uppercase', color: '#FFF', borderLeft: '50px solid rgba(0,0,0,0)', position: 'fixed', top:'0px',  }}> Exalabs UMass Lowell </Typography>
+         <Typography sx={{ margin: '15px', fontFamily: "'Barlow', Arial, sans-serif", fontWeight: 'bold', fontSize: '15px', letterSpacing: '0.16em', textTransform: 'uppercase', color: '#FFF', borderLeft: '50px solid rgba(0,0,0,0)', position: 'fixed', top:'0px',  }}> Exalabs UMass Lowell </Typography>
       </Box>
         <MainHeader />
         <Box sx={{justifyContent: 'center', display: 'flex', flexDirection: 'column',}}>
@@ -583,7 +583,7 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
                  setStartInstructions(false);
                  setPreSurvey(true);
             }}>
-                 <Typography sx={{ fontSize: 20, fontFamily: "'Cormorant Garamond', Georgia, serif"}}> <strong>Instructions</strong> </Typography>
+                 <Typography sx={{ fontSize: 20, fontFamily: "'Barlow', Arial, sans-serif"}}> <strong>Instructions</strong> </Typography>
             </Button>
 
         </Box>
@@ -594,7 +594,7 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
            setPreSurvey(false);
            setDemographics(true);
         }}>
-             <Typography sx={{ fontSize: 20, fontFamily: "'Cormorant Garamond', Georgia, serif"}}> <strong>Start</strong> </Typography>
+             <Typography sx={{ fontSize: 20, fontFamily: "'Barlow', Arial, sans-serif"}}> <strong>Start</strong> </Typography>
         </Button>
       </div>
     );
@@ -614,7 +614,7 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
             sx={{height:'50px',alignItems:'center',justifyContent:'center',display:'flex',top:'0px',left:'0px',}}
             src={`${process.env.PUBLIC_URL}/exalabs-logo.png`}
          />
-         <Typography sx={{ margin: '15px', fontFamily: "'DM Mono', monospace", fontWeight: 'bold', fontSize: '15px', letterSpacing: '0.16em', textTransform: 'uppercase', color: '#FFF', borderLeft: '50px solid rgba(0,0,0,0)', position: 'fixed', top:'0px',  }}> Exalabs UMass Lowell </Typography>
+         <Typography sx={{ margin: '15px', fontFamily: "'Barlow', Arial, sans-serif", fontWeight: 'bold', fontSize: '15px', letterSpacing: '0.16em', textTransform: 'uppercase', color: '#FFF', borderLeft: '50px solid rgba(0,0,0,0)', position: 'fixed', top:'0px',  }}> Exalabs UMass Lowell </Typography>
       </Box>
       <InstructionBoard msgs={ presurvey_messages } nextLink={samplePair} setNextLink={setSamplePair} currLink={preSurvey} setCurrLink={setPreSurvey} nextText={"next"} textSize={"25px"}/>
       </div>
@@ -623,7 +623,7 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
   if (samplePair) { // display a sample pair for the user to select from
       return (
           <div style={{ justifyContent: 'center', flexDirection: 'column', display: 'flex', width: '100%', minHeight: '100vh', overflowX: 'hidden', background: '#f5f3ef',}}>
-    <div style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial", alignItems: 'stretch', }}>
+    <div style={{ fontFamily: "'Barlow', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial", alignItems: 'stretch', }}>
       <div>
       <Box sx={{
          width: '100%',
@@ -639,10 +639,10 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
             sx={{height:'50px',alignItems:'center',justifyContent:'center',display:'flex', position: 'fixed',top:'0px',left:'0px',}}
             src={`${process.env.PUBLIC_URL}/exalabs-logo.png`}
          />
-         <Typography sx={{ margin: '13px', fontFamily: "'DM Mono', monospace", fontWeight: 'bold', fontSize: '15px', letterSpacing: '0.16em', textTransform: 'uppercase', color: '#FFF', borderLeft: '20px solid rgba(0,0,0,0)', }}> Exalabs UMass Lowell </Typography>
+         <Typography sx={{ margin: '13px', fontFamily: "'Barlow', Arial, sans-serif", fontWeight: 'bold', fontSize: '15px', letterSpacing: '0.16em', textTransform: 'uppercase', color: '#FFF', borderLeft: '20px solid rgba(0,0,0,0)', }}> Exalabs UMass Lowell </Typography>
       </Box>   
       <Box sx={{ display: 'flex', flexDirection: 'column', textAlign: 'center', alignItems: 'center', justifyContent: 'center', fontSize: 25, padding: '60px', margin: '0 auto', color: '#000' }}>
-        <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 25, }}>Click the video you think is{' '} <strong>more complex</strong></span>&nbsp;
+        <span style={{ fontFamily: "'Barlow', Arial, sans-serif", fontSize: 25, }}>Click the video you think is{' '} <strong>more complex</strong></span>&nbsp;
       </Box>
       
       <div style={{ display: "flex", gap: 12, alignItems: "stretch" }}>
@@ -671,7 +671,7 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
             sx={{height:'50px',alignItems:'center',justifyContent:'center',display:'flex',top:'0px',left:'0px',}}
             src={`${process.env.PUBLIC_URL}/exalabs-logo.png`}
          />
-         <Typography sx={{ margin: '15px', fontFamily: "'DM Mono', monospace", fontWeight: 'bold', fontSize: '15px', letterSpacing: '0.16em', textTransform: 'uppercase', color: '#FFF', borderLeft: '50px solid rgba(0,0,0,0)', position: 'fixed', top:'0px',  }}> Exalabs UMass Lowell </Typography>
+         <Typography sx={{ margin: '15px', fontFamily: "'Barlow', Arial, sans-serif", fontWeight: 'bold', fontSize: '15px', letterSpacing: '0.16em', textTransform: 'uppercase', color: '#FFF', borderLeft: '50px solid rgba(0,0,0,0)', position: 'fixed', top:'0px',  }}> Exalabs UMass Lowell </Typography>
       </Box>
       <InstructionBoard msgs={ final_message } nextLink={demographics} setNextLink={setDemographics} currLink={selectedSample} setCurrLink={setSelectedSample} nextText={"start"} textSize={"25px"} />
       </div>
@@ -692,7 +692,7 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
             sx={{height:'50px',alignItems:'center',justifyContent:'center',display:'flex',top:'0px',left:'0px',}}
             src={`${process.env.PUBLIC_URL}/exalabs-logo.png`}
          />
-         <Typography sx={{ margin: '15px', fontFamily: "'DM Mono', monospace", fontWeight: 'bold', fontSize: '15px', letterSpacing: '0.16em', textTransform: 'uppercase', color: '#FFF', borderLeft: '50px solid rgba(0,0,0,0)', position: 'fixed', top:'0px',  }}> Exalabs UMass Lowell </Typography>
+         <Typography sx={{ margin: '15px', fontFamily: "'Barlow', Arial, sans-serif", fontWeight: 'bold', fontSize: '15px', letterSpacing: '0.16em', textTransform: 'uppercase', color: '#FFF', borderLeft: '50px solid rgba(0,0,0,0)', position: 'fixed', top:'0px',  }}> Exalabs UMass Lowell </Typography>
       </Box>
       <Box sx={{borderRadius: '10px', display: 'flex', flexDirection: 'column',  width: '50%', height: '80%', border: '2px solid #001000', margin: '10% 0 0 0', }}>
         <DemographicsForm errors={errors} countries={countries} languages={languages} professions={professions}/>
@@ -703,7 +703,7 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
               setInitSurvey(true);
            }
         }}>
-                 <Typography sx={{ fontSize: 20, fontFamily: "'Cormorant Garamond', Georgia, serif"}}> <strong>Submit</strong> </Typography>
+                 <Typography sx={{ fontSize: 20, fontFamily: "'Barlow', Arial, sans-serif"}}> <strong>Submit</strong> </Typography>
         </Button>
       </Box>   
       </div>
@@ -742,13 +742,13 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
             sx={{height:'50px',alignItems:'center',justifyContent:'center',display:'flex',top:'0px',left:'0px',}}
             src={`${process.env.PUBLIC_URL}/exalabs-logo.png`}
          />
-         <Typography sx={{ margin: '12px 0 12px 10px', fontFamily: "'DM Mono', monospace", fontWeight: 'bold', fontSize: '15px', letterSpacing: '0.16em', textTransform: 'uppercase', color: '#FFFFFF', borderLeft: '1px solid rgba(26,25,23,0.15)', paddingLeft: '10px', }}> Exalabs UMass Lowell </Typography>
+         <Typography sx={{ margin: '12px 0 12px 10px', fontFamily: "'Barlow', Arial, sans-serif", fontWeight: 'bold', fontSize: '15px', letterSpacing: '0.16em', textTransform: 'uppercase', color: '#FFFFFF', borderLeft: '1px solid rgba(26,25,23,0.15)', paddingLeft: '10px', }}> Exalabs UMass Lowell </Typography>
       </Box>
         <Box sx={{ justifyContent: 'center', alignItems: 'center', position: 'relative', }}>
-           <Typography sx={{fontWeight: 'bold', fontSize: '50px', fontFamily: "'Cormorant Garamond', Georgia, serif", alignItems: 'center', justifyContent: 'center', display: 'flex', position: 'relative', margin: '50px', color: '#000',}}>
+           <Typography sx={{fontWeight: 'bold', fontSize: '50px', fontFamily: "'Barlow', Arial, sans-serif", alignItems: 'center', justifyContent: 'center', display: 'flex', position: 'relative', margin: '50px', color: '#000',}}>
 		Survey complete
 	   </Typography>
-           <Typography sx={{fontWeight: '', fontSize: '35px', fontFamily: "'Cormorant Garamond', Georgia, serif", alignItems: 'center', justifyContent: 'center', display: 'flex', position: 'relative', margin: '30px', color: '#000',}}>
+           <Typography sx={{fontWeight: '', fontSize: '35px', fontFamily: "'Barlow', Arial, sans-serif", alignItems: 'center', justifyContent: 'center', display: 'flex', position: 'relative', margin: '30px', color: '#000',}}>
 		Thank you for participating in this study conducted by Exalabs!
 	   </Typography>
         </Box>
@@ -756,9 +756,9 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
         <EmailBox xpos='0%' ypos='20%'/>
 <Button sx= {{ gap: '50px', margin: '50px 0', borderBottom: '100px', color: '#000', border: '1px solid #000', '&:hover': { backgroundColor: 'rgba(150, 220, 255, 0.9)', color: '#FFF', border: '1px solid #000',}, fontSize: '25px', }} onClick={restart}>Restart</Button>
         <Box>
-           <Typography sx={{fontWeight: '', fontSize: '20px', fontFamily: "'Cormorant Garamond', Georgia, serif", alignItems: 'center', justifyContent: 'center', display: 'flex', position: 'relative', margin: '30px', color: '#000',}}>
+           <Typography sx={{fontWeight: '', fontSize: '20px', fontFamily: "'Barlow', Arial, sans-serif", alignItems: 'center', justifyContent: 'center', display: 'flex', position: 'relative', margin: '30px', color: '#000',}}>
 		To learn more, click on
-                <a href={`${process.env.PUBLIC_URL}/info.html`} rel="noopener noreferrer"  style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", color: '#31F5A7', }}>this link</a>!
+                <a href={`${process.env.PUBLIC_URL}/info.html`} rel="noopener noreferrer"  style={{ fontFamily: "'Barlow', Arial, sans-serif", color: '#31F5A7', }}>this link</a>!
 	   </Typography>
         </Box>
         
@@ -785,7 +785,7 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
             sx={{height:'50px',alignItems:'center',justifyContent:'center',display:'flex',top:'0px',left:'0px',}}
             src={`${process.env.PUBLIC_URL}/exalabs-logo.png`}
          />
-         <Typography sx={{ margin: '10px', fontFamily: "'DM Mono', monospace", fontWeight: 'bold', fontSize: '15px', letterSpacing: '0.16em', textTransform: 'uppercase', color: '#FFF', borderLeft: '50px solid rgba(0,0,0,0)', }}> Exalabs UMass Lowell </Typography>
+         <Typography sx={{ margin: '10px', fontFamily: "'Barlow', Arial, sans-serif", fontWeight: 'bold', fontSize: '15px', letterSpacing: '0.16em', textTransform: 'uppercase', color: '#FFF', borderLeft: '50px solid rgba(0,0,0,0)', }}> Exalabs UMass Lowell </Typography>
       </Box>
         <h2>Not enough videos to compare</h2>
         <Button sx= {{ gap: '150px', margin: '100px 0'}}  onClick={restart}>Reload</Button>
@@ -795,7 +795,7 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
   
   return (
     <div style={{ justifyContent: 'center', flexDirection: 'column', display: 'flex', width: '100%', minHeight: '100vh', overflowX: 'hidden', background: '#f5f3ef',}}>
-    <div style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial", alignItems: 'stretch', }}>
+    <div style={{ fontFamily: "'Barlow', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial", alignItems: 'stretch', }}>
       <div>
       <Box sx={{
          width: '100%',
@@ -811,11 +811,11 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
             sx={{height:'50px',alignItems:'center',justifyContent:'center',display:'flex', position: 'fixed',top:'0px',left:'0px',}}
             src={`${process.env.PUBLIC_URL}/exalabs-logo.png`}
          />
-         <Typography sx={{ margin: '13px', fontFamily: "'DM Mono', monospace", fontWeight: 'bold', fontSize: '15px', letterSpacing: '0.16em', textTransform: 'uppercase', color: '#FFF', borderLeft: '20px solid rgba(0,0,0,0)', }}> Exalabs UMass Lowell </Typography>
+         <Typography sx={{ margin: '13px', fontFamily: "'Barlow', Arial, sans-serif", fontWeight: 'bold', fontSize: '15px', letterSpacing: '0.16em', textTransform: 'uppercase', color: '#FFF', borderLeft: '20px solid rgba(0,0,0,0)', }}> Exalabs UMass Lowell </Typography>
       </Box>   
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 25, padding: '60px', color: '#000' }}>
-        <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}>Click the video you think is{' '}</span>&nbsp;
-        <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}><strong>more complex</strong></span>&nbsp;
+        <span style={{ fontFamily: "'Barlow', Arial, sans-serif" }}>Click the video you think is{' '}</span>&nbsp;
+        <span style={{ fontFamily: "'Barlow', Arial, sans-serif" }}><strong>more complex</strong></span>&nbsp;
       </Box>
       
       <div style={{ display: "flex", gap: 12, alignItems: "stretch" }}>
@@ -824,9 +824,9 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
       </div>
       <div style={{ padding: '20px 24px 32px', maxWidth: '900px', margin: '0 auto', width: '100%'}}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: 'center',  marginBottom: '10px',}}>
-           <Typography sx={{fontSize: 22, fontFamily: "'Cormorant Garamond', Georgia, serif"}}>PROGRESS</Typography>
+           <Typography sx={{fontSize: 22, fontFamily: "'Barlow', Arial, sans-serif"}}>PROGRESS</Typography>
 	   <div style={{ display: "flex", alignItems: 'center', gap: '10px',}}>
-              <Typography sx={{fontSize: 30, fontWeight: 'bold', fontFamily: "'Cormorant Garamond', Georgia, serif"}}>{vidnum - 1}</Typography>/<Typography sx={{fontSize: 22, fontFamily: "'Cormorant Garamond', Georgia, serif"}}>{numVideos+1} pairs complete</Typography>
+              <Typography sx={{fontSize: 30, fontWeight: 'bold', fontFamily: "'Barlow', Arial, sans-serif"}}>{vidnum - 1}</Typography>/<Typography sx={{fontSize: 22, fontFamily: "'Barlow', Arial, sans-serif"}}>{numVideos+1} pairs complete</Typography>
            </div>
         </div>
         <div style={{ display: "flex", justifyContent: "center", }} >
@@ -864,7 +864,7 @@ function Timerbox({ start, time_to_choose }) {
     <div style={{ width: '200px', height: '200px', borderRadius: '200px', backgroundColor: "#CCFFFF", justifyContent: 'center', alignItems: 'center', display: 'flex', }}>
       <div style={{ width: '180px', height: '180px', borderRadius: '180px', backgroundColor: "#4D4DFF", position: 'relative', justifyContent: 'center', alignItems: 'center', display: 'flex', }}>
         <div style={{ width: '170px', height: '170px', borderRadius: '170px', backgroundColor: "#CCFFFF", justifyContent: 'center', alignItems: 'center', display: 'flex', }}>
-          <Typography sx={{ alignItems: 'center', fontWeight: 'bold', fontFamily: "'Orbitron', monospace", fontSize: '1.5rem', textShadow: `0 0 5px rgba(0,0,255,0.6), 0 0 10px rgba(0,0,255,0.4)`}}>{ count(timer, time_to_choose) }</Typography>
+          <Typography sx={{ alignItems: 'center', fontWeight: 'bold', fontFamily: "'Barlow', Arial, sans-serif", fontSize: '1.5rem', textShadow: `0 0 5px rgba(0,0,255,0.6), 0 0 10px rgba(0,0,255,0.4)`}}>{ count(timer, time_to_choose) }</Typography>
         </div>
       </div>
     </div>
@@ -905,7 +905,7 @@ function VideoCard({ item, onChoose, position = "left", fadeAnimation }) {
       }}
       onKeyDown={(e) => { if (e.key === "Enter") onChoose(); }}
     >
-      <div style={{ marginBottom: '8px', fontFamily: "'DM Mono', monospace", fontWeight: 300, color: '#000', letterSpacing: '0.2em' }}>
+      <div style={{ marginBottom: '8px', fontFamily: "'Barlow', Arial, sans-serif", fontWeight: 300, color: '#000', letterSpacing: '0.2em' }}>
         
       </div>
       {item.url && (
@@ -1156,7 +1156,7 @@ function InstructionBoard({ msgs, nextLink, setNextLink, currLink, setCurrLink, 
          <Typography 
            variant="h4"
            sx={{
-             fontFamily: "'Cormorant Garamond', Georgia, serif",
+             fontFamily: "'Barlow', Arial, sans-serif",
              fontWeight: 600,
              letterSpacing: '0.18em',
              textTransform: 'uppercase',
@@ -1178,7 +1178,7 @@ function InstructionBoard({ msgs, nextLink, setNextLink, currLink, setCurrLink, 
 		   <Typography sx={{ textSize: textSize}}>Previous</Typography>
                 </Button>)
            }
-           { msgs.length > 1 && <Typography sx={{ gap: '20px', fontWeight: 'bold', fontFamily: `'Orbitron', 'Roboto Mono', 'JetBrains Mono', monospace`, }}>
+           { msgs.length > 1 && <Typography sx={{ gap: '20px', fontWeight: 'bold', fontFamily: "'Barlow', Arial, sans-serif", }}>
               {(currentInstruction+1)}/{msgs.length}
            </Typography> }
            {msgs.length > 1 && currentInstruction < msgs.length - 1 && (
@@ -1215,7 +1215,7 @@ function ChoiceCard({ chosen, notChosen, time }) {
         flexDirection: 'column',
      }}>
        <Typography sx={{
-         fontFamily: `'Orbitron', 'Roboto Mono', 'JetBrains Mono', monospace`,
+         fontFamily: "'Barlow', Arial, sans-serif",
          fontWeight: 600,
          letterSpacing: '0.12em',
          textTransform: 'uppercase', 
@@ -1238,7 +1238,7 @@ function ChoiceCard({ chosen, notChosen, time }) {
         flexDirection: 'column',
      }}>
        <Typography sx={{
-         fontFamily: `'Orbitron', 'Roboto Mono', 'JetBrains Mono', monospace`,
+         fontFamily: "'Barlow', Arial, sans-serif",
          fontWeight: 600,
          borderRadius: '5px',
          letterSpacing: '0.12em',
@@ -1529,7 +1529,7 @@ function EmailBox({ xpos, ypos }) {
           }}
           onClick={renderEmail}
         >
-          <Typography sx={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: "bold", fontSize: "30px" }}>
+          <Typography sx={{ fontFamily: "'Barlow', Arial, sans-serif", fontWeight: "bold", fontSize: "30px" }}>
             Submit
           </Typography>
         </Button>
@@ -1731,7 +1731,7 @@ function MainHeader() {
       fontColor: '#FFF',
       padding: '100px',
     }}>
-      <Typography sx={{fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: 'bold', fontSize: '70px', alignItems: 'center', justifyContent: 'center', display: 'flex', position: 'relative', padding: '20px', color: '#000', }}>
+      <Typography sx={{fontFamily: "'Barlow', Arial, sans-serif", fontWeight: 'bold', fontSize: '70px', alignItems: 'center', justifyContent: 'center', display: 'flex', position: 'relative', padding: '20px', color: '#000', }}>
         Welcome to the swarm complexity ranking survey!
       </Typography>
     </Box>
@@ -1768,7 +1768,7 @@ function DoubleArrow({ xpos, ypos }) {
      padding: '5px',
      fontSize: '25px',
   }}>
-  <Typography sx={{fontWeight: 'bold', fontSize: '25px', alignItems: 'center', justifyContent: 'center', display: 'flex', position: 'relative', margin: '20px', fontFamily: "'Orbitron', monospace", }}>
+  <Typography sx={{fontWeight: 'bold', fontSize: '25px', alignItems: 'center', justifyContent: 'center', display: 'flex', position: 'relative', margin: '20px', fontFamily: "'Barlow', Arial, sans-serif", }}>
      Most complex
   </Typography>
   </Box>
@@ -1806,7 +1806,7 @@ function DoubleArrow({ xpos, ypos }) {
      textColor: '#FFF',
      padding: '5px',
   }}>
-  <Typography sx={{fontWeight: 'bold', fontSize: '25px', alignItems: 'center', justifyContent: 'center', display: 'flex', position: 'relative', margin: '20px', fontFamily: "'Orbitron', monospace", }}>
+  <Typography sx={{fontWeight: 'bold', fontSize: '25px', alignItems: 'center', justifyContent: 'center', display: 'flex', position: 'relative', margin: '20px', fontFamily: "'Barlow', Arial, sans-serif", }}>
      Least complex
   </Typography>
   </Box>

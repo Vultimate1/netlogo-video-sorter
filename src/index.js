@@ -7,11 +7,16 @@ import VideoPairApp_simple from './App_onebyone_simple';
 import { HashRouter } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import "@fontsource/barlow/300.css";
+import "@fontsource/barlow/400.css";
+import "@fontsource/barlow/500.css";
+import "@fontsource/barlow/600.css";
+import "@fontsource/barlow/700.css";
 
 
 const theme = createTheme({
   typography: {
-    fontFamily: "Inter, Montserrat, Roboto, Arial, sans-serif, Titillium Web, Helvetica",
+    fontFamily: "'Barlow', Arial, sans-serif",
   },
 });
 
