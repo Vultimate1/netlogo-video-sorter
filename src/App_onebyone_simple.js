@@ -438,7 +438,6 @@ useEffect(() => {
 
   // keyboard support: ArrowLeft picks left, ArrowRight picks right
   useEffect(() => {
-    setTitleFloat(false);
     const handler = (e) => {
       if (ended || loading) return;
       if (e.key === "ArrowLeft") onChoose("left");
@@ -449,9 +448,6 @@ useEffect(() => {
       rankedVideos[video.id] = index;
       //console.log("ended id: "+video+", index: "+index);
     });
-      setTimeout(() => {
-         setTitleFloat(true);
-      }, 1000); // small delay ensures first render happens at opacity 0
     return () => window.removeEventListener("keydown", handler);
   }, [ended, loading, pair]);
 
@@ -529,8 +525,6 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
     
     console.log("behavior: "+behavior);
     setEnded(false);
-    setTitleFloat(false);
-    console.log("setting float");
     setStart(performance.now());
   };
 
@@ -588,7 +582,6 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
                  // goes to the tutorial screen
                  setStartInstructions(false);
                  setPreSurvey(true);
-                 setTitleFloat(true);
             }}>
                  <Typography sx={{ fontSize: 20, fontFamily: "'Cormorant Garamond', Georgia, serif"}}> <strong>Instructions</strong> </Typography>
             </Button>
@@ -600,7 +593,6 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
            setStartInstructions(false);
            setPreSurvey(false);
            setDemographics(true);
-           setTitleFloat(true);
         }}>
              <Typography sx={{ fontSize: 20, fontFamily: "'Cormorant Garamond', Georgia, serif"}}> <strong>Start</strong> </Typography>
         </Button>
@@ -709,7 +701,6 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
            if (validate()) {
               setDemographics(false);
               setInitSurvey(true);
-              setTitleFloat(true);
            }
         }}>
                  <Typography sx={{ fontSize: 20, fontFamily: "'Cormorant Garamond', Georgia, serif"}}> <strong>Submit</strong> </Typography>
