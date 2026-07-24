@@ -17,11 +17,9 @@ import {   Button,
   Fade,
   Menu, MenuProps, MenuItem,
   Select, SelectChangeEvent } from '@mui/material';
-import { AnimatedBackground, useAnimationControls } from 'animated-backgrounds';
 import { styled } from '@mui/system';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import emailjs from 'emailjs-com';
-import { keyframes } from "@mui/system";
 import axios from "axios";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
@@ -35,17 +33,6 @@ let resultsName = "";
 const REGISTRATION_API_URL = "https://netlogo-survey-registration.onrender.com";
 
 export default function VideoPairApp_simple() {
-  // CSS components
-  const body = {
-    height: "100%",
-    width: "100%",
-    border: "10px solid transparent",
-    borderImage: "url(https://vultimate1.github.io/grid-electronics.png)",
-    borderImageRepeat: "round",
-    transition: "background-color 0.8s ease",
-    boxSizing: "border-box",
-  };
-
   // states
   const [complete, setComplete] = useState(false); // has user completed survey already
   const [userEmail, setUserEmail] = useState(null); // user email
@@ -83,7 +70,6 @@ export default function VideoPairApp_simple() {
   const [rankings, setRankings] = useState([]); // ordered ranked videos after the survey
   const [display, setDisplay] = useState(0); // choose which results to display: rankings or the times
   const [numChanges, setNumChanges] = useState(0); // this is used to determine which results to display
-  const [titleFloat, setTitleFloat] = useState(false); // for floating animation for a header
   const [betas, setBetas] = useState({}); // bradley-terry probabilities of the next videos being selected
   const [numVideos, setNumVideos] = useState(0);
   const specificBehavior = "linear";
@@ -96,12 +82,6 @@ useEffect(() => {
   if (fetched_email) {
     setUserEmail(decodeURIComponent(fetched_email));
   }
-
-  // Timing background render upon survey start up
-  const timer = setTimeout(() => {
-    setTitleFloat(true);
-  }, 50); // small delay ensures first render happens at opacity 0
-  return () => clearTimeout(timer);
 }, []);
 
 useEffect(() => {
@@ -120,15 +100,6 @@ useEffect(() => {
     setVisible(true);
   }, 500);
 }, [startInstructions]);
-
-
-// title text floats into screen
-useEffect(() => {
-  setTitleFloat(false);
-  setTimeout(() => {
-    setTitleFloat(true);
-  }, 1000);
-}, [display]);
 
 
   var text = ""; // display text at the end
@@ -213,17 +184,6 @@ useEffect(() => {
 const btProbability = (beta_i, beta_j) => {
   return Math.exp(beta_i) / (Math.exp(beta_i) + Math.exp(beta_j));
 };
-
-const floatFadeIn = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
 
 // generate the pairs of videos according to the list of videos for the probabilistic selection of videos as per the Bradley-Terry method
 function generatePairs(videos) {
@@ -583,7 +543,7 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
   }
   if (complete) {
     return (
-      <div style={{ justifyContent: 'flex-start', alignItems: 'center', flexDirection: 'column', display: 'flex', width: '100%', minHeight: '100vh', overflowX: 'hidden', background: `url('general-white-blue.jpg')`, transition: 'background-image 0.5s ease', backgroundSize: '100% 100%, 100% 100%, contain', backgroundPosition: 'center, center, center', backgroundRepeat: 'no-repeat, no-repeat, no-repeat', backgroundBlendMode: 'multiply',}}>
+      <div style={{ justifyContent: 'flex-start', alignItems: 'center', flexDirection: 'column', display: 'flex', width: '100%', minHeight: '100vh', overflowX: 'hidden', background: `url('general-white-blue.jpg')`,backgroundSize: '100% 100%, 100% 100%, contain', backgroundPosition: 'center, center, center', backgroundRepeat: 'no-repeat, no-repeat, no-repeat', backgroundBlendMode: 'multiply',}}>
          <Box sx={{
            width: '100%',
            height: 'flex',
@@ -607,7 +567,7 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
   }
   if (startInstructions) {
     return (
-      <div style={{ justifyContent: 'flex-start', alignItems: 'center', flexDirection: 'column', display: 'flex', width: '100%', minHeight: '100vh', overflowX: 'hidden', background: `url('general-white-blue.jpg')`, transition: 'background-image 0.5s ease', backgroundSize: '100% 100%, 100% 100%, contain', backgroundPosition: 'center, center, center', backgroundRepeat: 'no-repeat, no-repeat, no-repeat', backgroundBlendMode: 'multiply',}}>
+      <div style={{ justifyContent: 'flex-start', alignItems: 'center', flexDirection: 'column', display: 'flex', width: '100%', minHeight: '100vh', overflowX: 'hidden', background: `url('general-white-blue.jpg')`,backgroundSize: '100% 100%, 100% 100%, contain', backgroundPosition: 'center, center, center', backgroundRepeat: 'no-repeat, no-repeat, no-repeat', backgroundBlendMode: 'multiply',}}>
       <Box sx={{
          width: '100%',
          height: 'flex',
@@ -622,7 +582,7 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
          />
          <Typography sx={{ margin: '15px', fontFamily: "'DM Mono', monospace", fontWeight: 'bold', fontSize: '15px', letterSpacing: '0.16em', textTransform: 'uppercase', color: '#FFF', borderLeft: '50px solid rgba(0,0,0,0)', position: 'fixed', top:'0px',  }}> Exalabs UMass Lowell </Typography>
       </Box>
-        <MainHeader fadeAnimation={titleFloat} />
+        <MainHeader />
         <Box sx={{justifyContent: 'center', display: 'flex', flexDirection: 'column',}}>
             <Button sx={{ margin: '48px 0 0', backgroundColor: "#FFF", fontWeight: 'bold', fontSize: '15px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#9a9690', border: '1px solid rgba(26,25,23,0.2)', borderRadius: '4px', padding: '10px 28px', '&:hover': { color: '#1a1917', borderColor: '#2a2a8c', backgroundColor: 'transparent' }, }} variant="contained" onClick={() => {
                  // goes to the tutorial screen
@@ -649,7 +609,7 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
   }
   if (preSurvey) {
     return (
-      <div style={{ justifyContent: 'flex-start', alignItems: 'center', flexDirection: 'column', display: 'flex', width: '100%', minHeight: '100vh', overflowX: 'hidden', background: `url('general-white-blue.jpg')`, transition: 'background-image 0.5s ease', backgroundSize: '100% 100%, 100% 100%, contain', backgroundPosition: 'center, center, center', backgroundRepeat: 'no-repeat, no-repeat, no-repeat', backgroundBlendMode: 'multiply',}}>
+      <div style={{ justifyContent: 'flex-start', alignItems: 'center', flexDirection: 'column', display: 'flex', width: '100%', minHeight: '100vh', overflowX: 'hidden', background: `url('general-white-blue.jpg')`,backgroundSize: '100% 100%, 100% 100%, contain', backgroundPosition: 'center, center, center', backgroundRepeat: 'no-repeat, no-repeat, no-repeat', backgroundBlendMode: 'multiply',}}>
       <Box sx={{
          width: '100%',
          height: 'flex',
@@ -670,7 +630,7 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
   }
   if (samplePair) { // display a sample pair for the user to select from
       return (
-          <div style={{ justifyContent: 'center', flexDirection: 'column', display: 'flex', width: '100%', minHeight: '100vh', overflowX: 'hidden', background: '#f5f3ef', transition: 'background-color 0.5s ease', }}>
+          <div style={{ justifyContent: 'center', flexDirection: 'column', display: 'flex', width: '100%', minHeight: '100vh', overflowX: 'hidden', background: '#f5f3ef',}}>
     <div style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial", alignItems: 'stretch', }}>
       <div>
       <Box sx={{
@@ -706,7 +666,7 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
   }
   if (selectedSample) {
     return (
-      <div style={{ justifyContent: 'flex-start', alignItems: 'center', flexDirection: 'column', display: 'flex', width: '100%', minHeight: '100vh', overflowX: 'hidden', background: `url('general-white-blue.jpg')`, transition: 'background-image 0.5s ease', backgroundSize: '100% 100%, 100% 100%, contain', backgroundPosition: 'center, center, center', backgroundRepeat: 'no-repeat, no-repeat, no-repeat', backgroundBlendMode: 'multiply',}}>
+      <div style={{ justifyContent: 'flex-start', alignItems: 'center', flexDirection: 'column', display: 'flex', width: '100%', minHeight: '100vh', overflowX: 'hidden', background: `url('general-white-blue.jpg')`,backgroundSize: '100% 100%, 100% 100%, contain', backgroundPosition: 'center, center, center', backgroundRepeat: 'no-repeat, no-repeat, no-repeat', backgroundBlendMode: 'multiply',}}>
       <Box sx={{
          width: '100%',
          height: 'flex',
@@ -727,7 +687,7 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
   }
   if (demographics) {
     return (
-      <div style={{ justifyContent: 'flex-start', alignItems: 'center', flexDirection: 'column', display: 'flex', width: '100%', minHeight: '100vh', overflowX: 'hidden', background: `url('general-white-blue.jpg')`, transition: 'background-image 0.5s ease', backgroundSize: '100% 100%, 100% 100%, contain', backgroundPosition: 'center, center, center', backgroundRepeat: 'no-repeat, no-repeat, no-repeat', backgroundBlendMode: 'multiply',}}>
+      <div style={{ justifyContent: 'flex-start', alignItems: 'center', flexDirection: 'column', display: 'flex', width: '100%', minHeight: '100vh', overflowX: 'hidden', background: `url('general-white-blue.jpg')`,backgroundSize: '100% 100%, 100% 100%, contain', backgroundPosition: 'center, center, center', backgroundRepeat: 'no-repeat, no-repeat, no-repeat', backgroundBlendMode: 'multiply',}}>
       <Box sx={{
          width: '100%',
          height: 'flex',
@@ -778,7 +738,7 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
     return (
       //background: `linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), radial-gradient(circle at center, rgba(0,0,204,0.6) 50%, rgba(179,217,255, 0.6) 100%), url('general-white-blue.jpg')`
       <>
-      <div style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'column', display: 'flex', width: '100%', minHeight: '100vh', overflowX: 'hidden', background: `url('general-white-blue.jpg')`, transition: 'background-image 0.5s ease', backgroundSize: '100% 100%, 100% 100%, contain', backgroundPosition: 'center, center, center', backgroundRepeat: 'no-repeat, no-repeat, no-repeat', backgroundBlendMode: 'multiply',}}>
+      <div style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'column', display: 'flex', width: '100%', minHeight: '100vh', overflowX: 'hidden', background: `url('general-white-blue.jpg')`,backgroundSize: '100% 100%, 100% 100%, contain', backgroundPosition: 'center, center, center', backgroundRepeat: 'no-repeat, no-repeat, no-repeat', backgroundBlendMode: 'multiply',}}>
       <Box sx={{
          width: '100%',
          height: 'flex',
@@ -793,7 +753,7 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
          />
          <Typography sx={{ margin: '12px 0 12px 10px', fontFamily: "'DM Mono', monospace", fontWeight: 'bold', fontSize: '15px', letterSpacing: '0.16em', textTransform: 'uppercase', color: '#FFFFFF', borderLeft: '1px solid rgba(26,25,23,0.15)', paddingLeft: '10px', }}> Exalabs UMass Lowell </Typography>
       </Box>
-        <Box sx={{ justifyContent: 'center', alignItems: 'center', position: 'relative', opacity: titleFloat ? 1 : 0, transform: titleFloat ? "translateY(0)" : "translateY(-50px)", transition: "opacity 1s ease-out, transform 1s ease-out", }}>
+        <Box sx={{ justifyContent: 'center', alignItems: 'center', position: 'relative', }}>
            <Typography sx={{fontWeight: 'bold', fontSize: '50px', fontFamily: "'Cormorant Garamond', Georgia, serif", alignItems: 'center', justifyContent: 'center', display: 'flex', position: 'relative', margin: '50px', color: '#000',}}>
 		Survey complete
 	   </Typography>
@@ -843,7 +803,7 @@ function shuffleNoConsecutive(arr) { // important to ensure that the same behavi
   }
   
   return (
-    <div style={{ justifyContent: 'center', flexDirection: 'column', display: 'flex', width: '100%', minHeight: '100vh', overflowX: 'hidden', background: '#f5f3ef', transition: 'background-color 0.5s ease', }}>
+    <div style={{ justifyContent: 'center', flexDirection: 'column', display: 'flex', width: '100%', minHeight: '100vh', overflowX: 'hidden', background: '#f5f3ef',}}>
     <div style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial", alignItems: 'stretch', }}>
       <div>
       <Box sx={{
@@ -950,8 +910,7 @@ function VideoCard({ item, onChoose, position = "left", fadeAnimation }) {
         '&:hover': { boxShadow: '0px 0px 40px #54A6F0' },
         '&:active': { transform: 'translateY(0px) scale(0.995)' },
         opacity: fadeAnimation ? 1 : 0,
-        transform: fadeAnimation ? "translateX(0)" : position === "left" ? "translateX(-30px)" : "translateX(30px)",
-        transition: "opacity 1s ease-out, transform 1s ease-out",
+        transition: "opacity 0.3s ease-out",
       }}
       onKeyDown={(e) => { if (e.key === "Enter") onChoose(); }}
     >
@@ -1770,19 +1729,16 @@ function DemographicsForm({ errors, countries, languages, professions }) {
 
 /* STYLING FEATURES */
 // Main header for the swarm survey
-function MainHeader({ fadeAnimation }) {
+function MainHeader() {
   return (
-    <Box sx={{    
+    <Box sx={{
       width: 'flex',
-      height: '80%', 
-      textAlign: 'center', 
+      height: '80%',
+      textAlign: 'center',
       justifyContent: 'center',
       fontSize: '100px',
       fontColor: '#FFF',
       padding: '100px',
-      opacity: fadeAnimation ? 1 : 0, 
-      transform: fadeAnimation ? "translateY(0)" : "translateY(-50px)",
-      transition: "opacity 1s ease-out, transform 1s ease-out",
     }}>
       <Typography sx={{fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: 'bold', fontSize: '70px', alignItems: 'center', justifyContent: 'center', display: 'flex', position: 'relative', padding: '20px', color: '#000', }}>
         Welcome to the swarm complexity ranking survey!
